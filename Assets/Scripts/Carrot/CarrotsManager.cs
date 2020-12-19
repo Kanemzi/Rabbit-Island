@@ -11,7 +11,7 @@ public class CarrotsManager : MonoBehaviour
 	public int InitialCarrotsCount = 3;
 
 	[Header("References")]
-	public Grid Grid;
+	[SerializeField] private Grid _grid;
 	public GameObject CarrotPrefab;
 
 	private Dictionary<Vector2Int, CarrotController> _carrots;
@@ -29,10 +29,10 @@ public class CarrotsManager : MonoBehaviour
 	 */
 	private CarrotController SpawnCarrot(Vector2Int cell)
 	{
-		if (!Grid.IsValidCell(cell)) return null;
+		if (!_grid.IsValidCell(cell)) return null;
 		if (_carrots.ContainsKey(cell)) return null;
 
-		Vector3 position = Grid.GetRandomPosition(cell);
+		Vector3 position = _grid.GetRandomPosition(cell);
 		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.identity);
 
 		CarrotController carrot = obj.GetComponent<CarrotController>();
@@ -56,7 +56,7 @@ public class CarrotsManager : MonoBehaviour
 	{
 		if (source is CarrotSpread carrot)
 		{
-			Vector2Int sourcePosition = Grid.GetCell(carrot.transform.position);
+			Vector2Int sourcePosition = _grid.GetCell(carrot.transform.position);
 			List<Vector2Int> adjacent = GetEmptyAdjacentCells(sourcePosition);
 
 			if (adjacent.Count == 0) return;
@@ -113,9 +113,9 @@ public class CarrotsManager : MonoBehaviour
 	 */
 	public void Clear()
 	{
-		foreach (Vector2Int carrotTile in _carrots.Keys)
+		foreach (Vector2Int carrotCell in _carrots.Keys)
 		{
-			CarrotController carrot = _carrots[carrotTile];
+			CarrotController carrot = _carrots[carrotCell];
 			Destroy(carrot);
 		}
 		_carrots.Clear();
@@ -127,7 +127,7 @@ public class CarrotsManager : MonoBehaviour
 	 */
 	public void Init(int count, int radius)
 	{
-		List<Vector2Int> cells = Grid.GetCellsInRadius(radius);
+		List<Vector2Int> cells = _grid.GetCellsInRadius(radius);
 
 		for (int i = 0; i < count && cells.Count > 0; i++)
 		{
@@ -154,10 +154,10 @@ public class CarrotsManager : MonoBehaviour
 		Vector2Int left = cell + Vector2Int.left;
 		Vector2Int right = cell + Vector2Int.right;
 
-		if (Grid.IsValidCell(up) && !_carrots.ContainsKey(up)) adjacent.Add(up);
-		if (Grid.IsValidCell(down) && !_carrots.ContainsKey(down)) adjacent.Add(down);
-		if (Grid.IsValidCell(left) && !_carrots.ContainsKey(left)) adjacent.Add(left);
-		if (Grid.IsValidCell(right) && !_carrots.ContainsKey(right)) adjacent.Add(right);
+		if (_grid.IsValidCell(up) && !_carrots.ContainsKey(up)) adjacent.Add(up);
+		if (_grid.IsValidCell(down) && !_carrots.ContainsKey(down)) adjacent.Add(down);
+		if (_grid.IsValidCell(left) && !_carrots.ContainsKey(left)) adjacent.Add(left);
+		if (_grid.IsValidCell(right) && !_carrots.ContainsKey(right)) adjacent.Add(right);
 
 		return adjacent;
 	}

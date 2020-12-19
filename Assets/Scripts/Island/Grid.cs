@@ -78,7 +78,7 @@ public class Grid : MonoBehaviour
 	 */
 	public List<Vector2Int> GetCellsInRadius(int radius)
 	{
-		List<Vector2Int> tilesInRange = new List<Vector2Int>();
+		List<Vector2Int> cellsInRange = new List<Vector2Int>();
 
 		for (int y = -radius; y <= radius; y++)
 		{
@@ -88,11 +88,11 @@ public class Grid : MonoBehaviour
 
 				Vector2Int cell = new Vector2Int(x, y);
 				if (IsValidCell(cell))
-					tilesInRange.Add(cell);
+					cellsInRange.Add(cell);
 			}
 		}
 
-		return tilesInRange;
+		return cellsInRange;
 	}
 
 

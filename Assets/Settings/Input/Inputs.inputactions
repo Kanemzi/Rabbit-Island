@@ -1,0 +1,44 @@
+{
+    "name": "Inputs",
+    "maps": [
+        {
+            "name": "Hand",
+            "id": "c68418b9-f3f3-4baa-8881-604bb4087f33",
+            "actions": [
+                {
+                    "name": "Grab",
+                    "type": "Button",
+                    "id": "98d5831f-5ea3-497f-97af-7bfd2ca7256e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "75658736-901e-4696-b951-9f94f37d62ca",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "5be4c1f2-f85c-4e68-83c8-be001856f6fc",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grab",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
