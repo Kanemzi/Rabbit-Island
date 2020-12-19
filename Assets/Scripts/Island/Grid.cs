@@ -21,7 +21,7 @@ public class Grid : MonoBehaviour
 	private Vector3 _offset;
 	private float _maxRandomOffset;
 
-	private void Start()
+	private void Awake()
 	{
 		_validCellsCache = new Dictionary<Vector2Int, bool>();
 		ComputeOffset();
@@ -71,6 +71,30 @@ public class Grid : MonoBehaviour
 		position.z += Random.Range(-_maxRandomOffset, _maxRandomOffset);
 		return position;
 	}
+
+	/**
+	 * Returns a list of the valid cells in a certain range from the center
+	 * of the grid
+	 */
+	public List<Vector2Int> GetCellsInRadius(int radius)
+	{
+		List<Vector2Int> tilesInRange = new List<Vector2Int>();
+
+		for (int y = -radius; y <= radius; y++)
+		{
+			for (int x = -radius; x <= radius; x++)
+			{
+				if (y * y + x * x > radius * radius) continue;
+
+				Vector2Int cell = new Vector2Int(x, y);
+				if (IsValidCell(cell))
+					tilesInRange.Add(cell);
+			}
+		}
+
+		return tilesInRange;
+	}
+
 
 	public void ClearCache()
 	{

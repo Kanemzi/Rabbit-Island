@@ -1,13 +1,164 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class CarrotsManager : MonoBehaviour
 {
+	[Header("Initialize")]
+	public int InitialCarrotsRadius = 3;
+	public int InitialCarrotsCount = 3;
+
+	[Header("References")]
+	public Grid Grid;
+	public GameObject CarrotPrefab;
+
 	private Dictionary<Vector2Int, CarrotController> _carrots;
 
-	private void Awake()
+	private void Start()
 	{
 		_carrots = new Dictionary<Vector2Int, CarrotController>();
+
+		Init(InitialCarrotsCount, InitialCarrotsRadius);
+	}
+
+	/*
+	 * Spawns a carrot on a cell position
+	 * Returns the new carrot or null if there is already a carrot on the cell or the cell is invalid
+	 */
+	private CarrotController SpawnCarrot(Vector2Int cell)
+	{
+		if (!Grid.IsValidCell(cell)) return null;
+		if (_carrots.ContainsKey(cell)) return null;
+
+		Vector3 position = Grid.GetRandomPosition(cell);
+		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.identity);
+
+		CarrotController carrot = obj.GetComponent<CarrotController>();
+		_carrots.Add(cell, carrot);
+
+		CarrotSpread spread = carrot.Spread;
+		Grabbable grabbable = carrot.Grabbable;
+
+		carrot.onRot += RotCarrot;
+		spread.onSpread += SpreadCarrot;
+		grabbable.onGrab += UprootCarrot;
+		grabbable.onDrop += PlantCarrot;
+
+		return carrot;
+	}
+
+	/*
+	 * Spreads from another carrot
+	 */
+	private void SpreadCarrot(object source, EventArgs data)
+	{
+		if (source is CarrotSpread carrot)
+		{
+			Vector2Int sourcePosition = Grid.GetCell(carrot.transform.position);
+			List<Vector2Int> adjacent = GetEmptyAdjacentCells(sourcePosition);
+
+			if (adjacent.Count == 0) return;
+
+			int index = Random.Range(0, adjacent.Count);
+			SpawnCarrot(adjacent[index]);
+		}
+	}
+
+	/*
+	 * Removes a rotten carrot from the grid
+	 * The carrot is removed from the grid as soon a it's rotten, therefore, the rotten carrot cannot be eaten by rabbits
+	 * However, the rotten carrots are still visually present on the ground during the rot animation (other new carrots can still appear
+	 * on the same cell during this animation)
+	 */
+	private void RotCarrot(object source, EventArgs data)
+	{
+		if (source is CarrotController carrot)
+		{
+
+		}
+	}
+
+	/*
+	 * Plants an existing carrot on the ground at a certain position
+	 * 3 Cases:
+	 *	- If the destination cell is empty, the carrot is planted there, returns the planted carrot.
+	 *	- If the destination cell is invalid (out of bounds), the carrot is destroyed, returns null.
+	 *	- If the destination cell already contains a carrot, the planted carrot merges into the other one, returns the already planted carrot.
+	 *		The merge adds the food amount to the already planted carrot, the merged carrot is destroyed
+	 */
+	private void PlantCarrot(object source, Grabbable.DropData data)
+	{
+		if (source is CarrotController carrot)
+		{
+			Vector3 plantPosition = data.GroundPosition;
+		}
+	}
+
+	/*
+	 * Uproots an existing carrot of the grid
+	 */
+	private void UprootCarrot(object source, EventArgs data)
+	{
+		if (source is CarrotController carrot)
+		{
+
+		}
+	}
+
+
+	/**
+	 * Removes all the carrots from the island
+	 */
+	public void Clear()
+	{
+		foreach (Vector2Int carrotTile in _carrots.Keys)
+		{
+			CarrotController carrot = _carrots[carrotTile];
+			Destroy(carrot);
+		}
+		_carrots.Clear();
+	}
+
+	/**
+	 * Initializes the island by instancing a certain amount of 
+	 * carrots in the center of the island
+	 */
+	public void Init(int count, int radius)
+	{
+		List<Vector2Int> cells = Grid.GetCellsInRadius(radius);
+
+		for (int i = 0; i < count && cells.Count > 0; i++)
+		{
+			int index = Random.Range(0, cells.Count);
+			Vector2Int cell = cells[index];
+
+			SpawnCarrot(cell);
+			cells.Remove(cell);
+		}
+	}
+
+	/**
+	 * Returns the 4 adjacent cells of a cell that aren't already occupied
+	 * by another carrot.
+	 * 
+	 * Used mainly for carrot spread
+	 */
+	private List<Vector2Int> GetEmptyAdjacentCells(Vector2Int cell)
+	{
+		List<Vector2Int> adjacent = new List<Vector2Int>();
+
+		Vector2Int up = cell + Vector2Int.up;
+		Vector2Int down = cell + Vector2Int.down;
+		Vector2Int left = cell + Vector2Int.left;
+		Vector2Int right = cell + Vector2Int.right;
+
+		if (Grid.IsValidCell(up) && !_carrots.ContainsKey(up)) adjacent.Add(up);
+		if (Grid.IsValidCell(down) && !_carrots.ContainsKey(down)) adjacent.Add(down);
+		if (Grid.IsValidCell(left) && !_carrots.ContainsKey(left)) adjacent.Add(left);
+		if (Grid.IsValidCell(right) && !_carrots.ContainsKey(right)) adjacent.Add(right);
+
+		return adjacent;
 	}
 }
