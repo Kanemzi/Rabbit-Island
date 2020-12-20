@@ -30,6 +30,7 @@ public class CarrotController : MonoBehaviour
 	private float _growTime;
 	private float _rotTime;
 
+	private bool _growing;
 	private float _lifetime;
 	private GrowState _growState;
 
@@ -38,15 +39,22 @@ public class CarrotController : MonoBehaviour
 		onGrow += FoodSource.OnGrow;
 		onGrow += Spread.OnGrow;
 
+		Grabbable.onGrab += OnGrab;
+		Grabbable.onDrop += OnDrop;
+
 		_growTime = Data.RandomGrowTime;
 		_rotTime = _growTime + Data.RandomRotTime;
 
 		_lifetime = 0.0f;
 		_growState = GrowState.Growing;
+
+		ResumeGrowing();
 	}
 
 	private void Update()
 	{
+		if (!_growing) return;
+
 		_lifetime += Time.deltaTime;
 
 		float growPercent = _lifetime / _rotTime;
@@ -77,4 +85,19 @@ public class CarrotController : MonoBehaviour
 			State = _growState
 		});
 	}
+
+	private void ResumeGrowing()
+	{
+		_growing = true;
+		Spread.enabled = true;
+	}
+
+	private void PauseGrowing()
+	{
+		_growing = false;
+		Spread.enabled = false;
+	}
+
+	private void OnGrab(object sender, Grabbable.GrabData data) => PauseGrowing();
+	private void OnDrop(object sender, Grabbable.DropData data) => ResumeGrowing();
 }

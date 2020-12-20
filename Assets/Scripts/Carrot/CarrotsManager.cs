@@ -90,20 +90,44 @@ public class CarrotsManager : MonoBehaviour
 	 */
 	private void PlantCarrot(object source, Grabbable.DropData data)
 	{
-		if (source is CarrotController carrot)
+		if (source is Grabbable gb)
 		{
-			Vector3 plantPosition = data.GroundPosition;
+			CarrotController carrot = gb.GetComponent<CarrotController>();
+			if (!carrot) return;
+			
+			Vector2Int cell = data.Cell;
+
+			if (!_grid.IsValidCell(cell))
+			{
+				Destroy(carrot.gameObject);
+				Debug.Log("Destroy");
+				return;
+			}
+
+			if (_carrots.ContainsKey(cell))
+			{
+				Destroy(carrot.gameObject); // TODO : Handle merge here !
+				Debug.Log("Merge");
+				return;
+			}
+
+			Debug.Log("Re plant carrot ");
+			_carrots.Add(cell, carrot);
 		}
 	}
 
 	/*
 	 * Uproots an existing carrot of the grid
 	 */
-	private void UprootCarrot(object source, EventArgs data)
+	private void UprootCarrot(object source, Grabbable.GrabData data)
 	{
-		if (source is CarrotController carrot)
+		if (source is Grabbable gb)
 		{
+			CarrotController carrot = gb.GetComponent<CarrotController>();
+			if (!carrot) return;
 
+			if (!_carrots.ContainsKey(data.Cell)) return;
+			_carrots.Remove(data.Cell);
 		}
 	}
 
@@ -160,5 +184,15 @@ public class CarrotsManager : MonoBehaviour
 		if (_grid.IsValidCell(right) && !_carrots.ContainsKey(right)) adjacent.Add(right);
 
 		return adjacent;
+	}
+
+	/**
+	 * Returns the carrot at the cell
+	 * Returns null if there is no carrot at the cell
+	 */
+	public CarrotController GetCarrotAt(Vector2Int cell)
+	{
+		if (!_carrots.ContainsKey(cell)) return null;
+		return _carrots[cell];
 	}
 }

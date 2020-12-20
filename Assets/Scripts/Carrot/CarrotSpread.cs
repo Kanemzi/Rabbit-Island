@@ -29,6 +29,7 @@ public class CarrotSpread : MonoBehaviour
 			{
                 onSpread?.Invoke(this, EventArgs.Empty);
 			}
+            _timeBeforeSpread = Data.TrySpreadInterval;
 		}
     }
 

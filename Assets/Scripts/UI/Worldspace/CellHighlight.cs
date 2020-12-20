@@ -25,7 +25,6 @@ public class CellHighlight : MonoBehaviour
 			
 			_valid = value;
 			_highlightMaterial.SetFloat(MATERIAL_VALID_PARAM, _valid ? 1.0f : 0.0f);
-			Debug.Log("Valid ! : " + _valid);
 		}
 	}
 
@@ -45,7 +44,7 @@ public class CellHighlight : MonoBehaviour
 		transform.localScale = Grid.CellSize * Vector3.one;
 	}
 
-	public void UpdateTarget(object sender, Hand.TargetCellChangeData data)
+	public void UpdateTarget(object sender, HandController.TargetCellData data)
 	{
 		Valid = data.Valid;
 		LeanTween.move(gameObject, data.Position , 0.05f);
