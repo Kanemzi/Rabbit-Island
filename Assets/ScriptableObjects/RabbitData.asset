@@ -1,0 +1,124 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bcbbe586f8489e469b47c25b9d25f12, type: 3}
+  m_Name: RabbitData
+  m_EditorClassIdentifier: 
+  DeathAge: {x: 155.89728, y: 240}
+  MinGrowScale: 0.4
+  MaxGrowScale: 0.8
+  PerceptionMaxDistance: 4
+  MinMoveSpeed: 4
+  MaxMoveSpeed: 3
+  MoveSpeedOverAge:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.15710723
+      inSlope: -0.8584788
+      outSlope: -0.8584788
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.078431375
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 3.379405
+      outSlope: 3.379405
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.022875845
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  MinStomachSize: {x: 21, y: 22}
+  MaxStomachSize: {x: 74, y: 81}
+  StomachSizeOverAge:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  HungryChanceOverStomachFill:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.2
+      value: 1
+      inSlope: 0.02827876
+      outSlope: 0.0012444791
+      tangentMode: 1
+      weightedMode: 0
+      inWeight: 0.51088774
+      outWeight: 0.35218978
+    - serializedVersion: 3
+      time: 0.5
+      value: 0
+      inSlope: -0.019583903
+      outSlope: -0.019583903
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.19632335
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  StomachStepInterval: 1
+  StomachEmptyStep: 1
+  MinMateAge: 10
+  MaxMateAge: 20
+  MateChanceOverTime:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  TryMateInterval: 5
+  IdleMovementsRange: 3
