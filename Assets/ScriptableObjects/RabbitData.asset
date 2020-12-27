@@ -15,7 +15,7 @@ MonoBehaviour:
   DeathAge: {x: 155.89728, y: 240}
   MinGrowScale: 0.4
   MaxGrowScale: 0.8
-  PerceptionMaxDistance: 4
+  PerceptionMaxDistance: 5
   MinMoveSpeed: 4
   MaxMoveSpeed: 3
   MoveSpeedOverAge:
@@ -43,7 +43,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   MinStomachSize: {x: 21, y: 22}
-  MaxStomachSize: {x: 74, y: 81}
+  MaxStomachSize: {x: 90, y: 100}
   StomachSizeOverAge:
     serializedVersion: 2
     m_Curve:
@@ -110,7 +110,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  StomachStepInterval: 1
+  RepleteTreshold: 0.7
+  StomachStepInterval: 2
   StomachEmptyStep: 1
   MinMateAge: 10
   MaxMateAge: 20
@@ -120,5 +121,5 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  MinStomachFillForMate: 0.5
   TryMateInterval: 5
-  IdleMovementsRange: 3

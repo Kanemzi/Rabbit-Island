@@ -31,10 +31,15 @@ public class RabbitController : MonoBehaviour
 		_currentAge = 0.0f;
 		_growing = true;
 
+		// Binds events
 		onGrow += Stomach.OnRabbitGrow;
 
 		Grabbable.onGrab += OnGrab;
 		Grabbable.onDrop += OnDrop;
+		Grabbable.onDrop += Brain.OnDrop;
+
+		Stomach.onHungry += Brain.OnRabbitHungry;
+		Stomach.onReplete += Brain.OnRabbitReplete;
 	}
 
 	private void Update()

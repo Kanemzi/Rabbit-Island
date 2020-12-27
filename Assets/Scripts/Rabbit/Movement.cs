@@ -14,9 +14,12 @@ public class Movement : MonoBehaviour
 	[Header("References")]
     public RabbitData Data;
 
-    [SerializeField] private NavMeshAgent _agent;
+	public Vector3 Target { get; protected set; }
+
+	[SerializeField] private NavMeshAgent _agent;
 	private NavMeshPath _path;
 	private float _currentSpeed;
+	private bool _currentTargetReached;
 
 	private void Start()
 	{
@@ -27,17 +30,37 @@ public class Movement : MonoBehaviour
 	public bool CanReachPosition(Vector3 position)
 	{
 		NavMeshPath path = new NavMeshPath();
-		return _agent.CalculatePath(position, path);
+		_agent.CalculatePath(position, path);
+
+		return path.status == NavMeshPathStatus.PathComplete;
 	}
 
 	public bool ReachPosition(Vector3 position)
 	{
-		return _agent.SetDestination(position);
+		if (!PositionReached())
+		{
+			onCancelMove?.Invoke(this, EventArgs.Empty);
+		}
+
+		Target = position;
+		_currentTargetReached = false;
+
+		onStartMoving?.Invoke(this, EventArgs.Empty);
+		return _agent.SetDestination(Target);
+	}
+
+	public bool PositionReached()
+	{
+		return _agent.remainingDistance <= _agent.stoppingDistance;
 	}
 
 	private void Update()
 	{
-		
+		if (!_currentTargetReached)
+		{
+			_currentTargetReached = PositionReached();
+			onTargetReached?.Invoke(this, EventArgs.Empty);
+		}
 	}
 
 	private void UpdateSpeed(float growPercent)

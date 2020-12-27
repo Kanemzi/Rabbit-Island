@@ -38,9 +38,9 @@ public class Grabbable : MonoBehaviour
 
     public void Grab(Vector2Int cell)
 	{
-        Debug.Log("Grab " + gameObject.name + ": " + cell);
         Rigidbody.isKinematic = false;
         Rigidbody.useGravity = true;
+
         Grabbed = true;
 
         onGrab?.Invoke(this, new GrabData

@@ -8,6 +8,7 @@ public class CarrotController : MonoBehaviour
 	public event EventHandler<GrowData> onGrow;
 	public event EventHandler onGrowEnd;
     public event EventHandler onRot;
+	public event EventHandler onMerge;
 
 	public enum GrowState
 	{
@@ -26,13 +27,14 @@ public class CarrotController : MonoBehaviour
 	public FoodSource FoodSource;
 	public CarrotSpread Spread;
 	public Grabbable Grabbable;
+	public CarrotAnimations Animations;
 
 	private float _growTime;
 	private float _rotTime;
 
 	private bool _growing;
 	private float _lifetime;
-	private GrowState _growState;
+	public GrowState State { get; private set; }
 
 	private void Start()
 	{
@@ -45,8 +47,12 @@ public class CarrotController : MonoBehaviour
 		_growTime = Data.RandomGrowTime;
 		_rotTime = _growTime + Data.RandomRotTime;
 
+		onRot += Animations.OnRot;
+		onRot += OnRot;
+		onGrow += Animations.OnGrow;
+
 		_lifetime = 0.0f;
-		_growState = GrowState.Growing;
+		State = GrowState.Growing;
 
 		ResumeGrowing();
 	}
@@ -60,20 +66,20 @@ public class CarrotController : MonoBehaviour
 		float growPercent = _lifetime / _rotTime;
 		
 		float ripePercent = 0.0f;
-		if (_growState == GrowState.Ripe)
+		if (State == GrowState.Ripe)
 		{
 			ripePercent = (_lifetime - _growTime) / (_rotTime - _growTime);
 		}
 
-		switch (_growState) 
+		switch (State) 
 		{
 			case GrowState.Growing when _lifetime >= _growTime:
-				_growState = GrowState.Ripe;
+				State = GrowState.Ripe;
 				onGrowEnd?.Invoke(this, EventArgs.Empty);
 				return;
 
 			case GrowState.Ripe when _lifetime >= _rotTime:
-				_growState = GrowState.Rotten;
+				State = GrowState.Rotten;
 				onRot?.Invoke(this, EventArgs.Empty);
 				return;
 		}
@@ -82,8 +88,15 @@ public class CarrotController : MonoBehaviour
 		{
 			GrowPercent = growPercent,
 			RipePercent = ripePercent,
-			State = _growState
+			State = State
 		});
+	}
+
+	public void Merge(CarrotController other) {
+		FoodSource.Merge(other.FoodSource);
+		Destroy(other.gameObject);
+
+		onMerge?.Invoke(this, EventArgs.Empty);
 	}
 
 	private void ResumeGrowing()
@@ -99,5 +112,6 @@ public class CarrotController : MonoBehaviour
 	}
 
 	private void OnGrab(object sender, Grabbable.GrabData data) => PauseGrowing();
+	private void OnRot(object sender, EventArgs data) => PauseGrowing();
 	private void OnDrop(object sender, Grabbable.DropData data) => ResumeGrowing();
 }

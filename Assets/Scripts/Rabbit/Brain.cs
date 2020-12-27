@@ -6,14 +6,18 @@ using UnityEngine;
 
 public class Brain : SerializedMonoBehaviour
 {
+    public event EventHandler onChangeAction;
+
     [Header("References")]
     public RabbitData Data;
     public Movement Movement;
+    public Eyes Eyes;
+    public Stomach Stomach;
 
     public enum Action
 	{
         Idle, 
-        SearchFood, MoveToFood, Eat,
+        SearchFood, ReachFood, Eat,
         WaitMate, JoinMate, Mate
 	}
 
@@ -29,6 +33,9 @@ public class Brain : SerializedMonoBehaviour
     // Idle State
     [HideInInspector] public Vector3 CenterPosition;
     [HideInInspector] public float TimeBeforeMove;
+
+    // Food State loop
+    [HideInInspector] public CarrotController TargetFood;
 
 	private void Awake()
 	{
@@ -57,22 +64,29 @@ public class Brain : SerializedMonoBehaviour
         _currentState = _states[newAction];
 
         _currentState?.Begin(this);
+        onChangeAction?.Invoke(this, EventArgs.Empty);
 	}
 
     #region [Components callbacks]
 
     public void OnRabbitHungry(object sender, EventArgs data) => Hungry = true;
     public void OnRabbitReplete(object sender, EventArgs data) => Hungry = false;
+    public void OnDrop(object sender, Grabbable.DropData data) => ChangeState(Action.Idle);
 
-	#endregion
+    #endregion
 
-	private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected()
 	{
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, Data.PerceptionMaxDistance);
+
         Gizmos.color = Color.yellow;
 		
-        if (_currentState is IdleState idleState)
+        if (_currentState is MovementState movementState)
 		{
-            Gizmos.DrawWireSphere(CenterPosition, idleState.IdleMovementsRange);
+            Gizmos.DrawWireSphere(CenterPosition, movementState.MovementsRange);
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(movementState.Target, 0.2f);
 		}
 	}
 }

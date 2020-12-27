@@ -4,16 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "IdleState", menuName = "ScriptableObjects/Brain/IdleState")]
-public class IdleState : BrainState
+public class IdleState : MovementState
 {
-    public float IdleMovementsRange = 6.0f;
-	[MinMaxSlider(0.1f, 16.0f)] public Vector2 MoveTimeInterval;
-
 	public override void Begin(Brain brain)
 	{
-		Debug.Log("Start idle");
-		brain.CenterPosition = brain.transform.position;
-		brain.TimeBeforeMove = RandomMoveTimeInterval;
+		base.Begin(brain);
 	}
 
 	public override void End(Brain brain)
@@ -23,27 +18,13 @@ public class IdleState : BrainState
 
 	public override void Tick(Brain brain)
 	{
-		brain.TimeBeforeMove -= Time.deltaTime;
-		if (brain.TimeBeforeMove <= 0.0f)
-		{
-			brain.TimeBeforeMove = RandomMoveTimeInterval;
-
-			Vector3 target = GetRandomPositionFromCenter(brain.CenterPosition, IdleMovementsRange);
-			Debug.Log("Reach target : " + target + " (current = " + brain.transform.position + ")");
-			brain.Movement.ReachPosition(target);
-		}
+		base.Tick(brain);
 	}
 
 	public override Brain.Action TakeDecision(Brain brain)
 	{
+		if (brain.Hungry)
+			return Brain.Action.SearchFood;
 		return brain.CurrentAction;
 	}
-
-	private Vector3 GetRandomPositionFromCenter(Vector3 center, float range)
-	{
-		Vector2 randomOffset = Random.insideUnitCircle * range;
-		return center + new Vector3(randomOffset.x, 0.0f, randomOffset.y);
-	}
-
-	public float RandomMoveTimeInterval => Random.Range(MoveTimeInterval.x, MoveTimeInterval.y);
 }

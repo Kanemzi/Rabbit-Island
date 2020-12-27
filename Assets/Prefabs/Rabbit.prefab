@@ -11,12 +11,14 @@ GameObject:
   - component: {fileID: 7270098678128214866}
   - component: {fileID: 7270098678128214871}
   - component: {fileID: 7270098678128214868}
+  - component: {fileID: 6435691311686458094}
   - component: {fileID: 7270098678128214869}
   - component: {fileID: 7408386824459859236}
   - component: {fileID: 8355214894560585572}
   - component: {fileID: 7270098678128214867}
   - component: {fileID: 4141481870005608885}
-  m_Layer: 0
+  - component: {fileID: 6134462130826410033}
+  m_Layer: 6
   m_Name: Rabbit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,6 +74,9 @@ MonoBehaviour:
     SerializedBytes: 
     ReferencedUnityObjects:
     - {fileID: 11400000, guid: c62c9ed82c6cf834395afb5a3285c04f, type: 2}
+    - {fileID: 11400000, guid: 05b2a7b57e3e2e64e85b549e1d60ea09, type: 2}
+    - {fileID: 11400000, guid: 66fa7b409eeb0ef4687a5c933a8a0bbc, type: 2}
+    - {fileID: 11400000, guid: 05a327ac523cfbb48a5e51703b1ae104, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -96,7 +101,7 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
-      Data: 1
+      Data: 4
     - Name: 
       Entry: 7
       Data: 
@@ -110,6 +115,42 @@ MonoBehaviour:
       Entry: 8
       Data: 
     - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 13
       Data: 
     - Name: 
@@ -117,6 +158,24 @@ MonoBehaviour:
       Data: 
   Data: {fileID: 11400000, guid: 61d2399a97b96c84d99992216c8c2667, type: 2}
   Movement: {fileID: 8355214894560585572}
+  Eyes: {fileID: 6435691311686458094}
+  Stomach: {fileID: 7270098678128214869}
+  CenterPosition: {x: 0, y: 0, z: 0}
+  TimeBeforeMove: 0
+  TargetFood: {fileID: 0}
+--- !u!114 &6435691311686458094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270098678128214864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93018e03dc799f04ba9af8d3e1d40381, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 61d2399a97b96c84d99992216c8c2667, type: 2}
 --- !u!114 &7270098678128214869
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +254,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
+--- !u!65 &6134462130826410033
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270098678128214864}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.7, y: 0.7, z: 0.7}
+  m_Center: {x: 0, y: 0.35, z: 0}
 --- !u!1 &7270098678240226720
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,8 +278,7 @@ GameObject:
   - component: {fileID: 7270098678240226723}
   - component: {fileID: 7270098678240226724}
   - component: {fileID: 7270098678240226725}
-  - component: {fileID: 7270098678240226722}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,16 +348,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &7270098678240226722
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7270098678240226720}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}

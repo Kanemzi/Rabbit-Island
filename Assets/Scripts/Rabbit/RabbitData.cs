@@ -11,6 +11,8 @@ public class RabbitData : ScriptableObject
     public Vector2 DeathAge;
     public float MinGrowScale = 0.4f;
     public float MaxGrowScale = 0.8f;
+
+    [Header("Eyes")]
     public float PerceptionMaxDistance = 4.0f;
 
     [Header("Movements")]

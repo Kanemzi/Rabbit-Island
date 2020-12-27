@@ -11,6 +11,7 @@ public class CarrotData : ScriptableObject
     [MinMaxSlider(10.0f, 40.0f)] public Vector2 RotTime;
     public float MinGrowScale = 0.4f;
     public float MaxGrowScale = 1.2f;
+    public float MaxAbsoluteScale = 1.3f;
 
     [Header("Food")]
     [MinMaxSlider(1, 20)] public Vector2Int MinFoodAmount;

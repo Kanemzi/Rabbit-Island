@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8332486355813069243}
   - component: {fileID: 7267701668141530123}
   - component: {fileID: 2545008367824996696}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,8 +94,10 @@ GameObject:
   - component: {fileID: 5876558386299054306}
   - component: {fileID: 3582923846165188132}
   - component: {fileID: 8690824675684879517}
+  - component: {fileID: 3788783570546653183}
   - component: {fileID: 3994083227280884642}
-  m_Layer: 0
+  - component: {fileID: 6579255949657150668}
+  m_Layer: 7
   m_Name: Carrot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -134,6 +136,7 @@ MonoBehaviour:
   FoodSource: {fileID: 5876558386299054306}
   Spread: {fileID: 3582923846165188132}
   Grabbable: {fileID: 8690824675684879517}
+  Animations: {fileID: 3788783570546653183}
 --- !u!114 &5876558386299054306
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -173,6 +176,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _grabHandle: {fileID: 3367038601529834145}
+--- !u!114 &3788783570546653183
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643579632865925402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 591c58ae0e218db44a218154ec66bc2a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: ddc5209cfb98c4d4586d086f30355dea, type: 2}
+  _body: {fileID: 3041917621065783584}
 --- !u!54 &3994083227280884642
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -189,6 +206,20 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!136 &6579255949657150668
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3643579632865925402}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6710722307091626024
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +229,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3367038601529834145}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: GrabHandle
   m_TagString: Untagged
   m_Icon: {fileID: 0}

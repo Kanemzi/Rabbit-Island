@@ -15,7 +15,6 @@ public class Stomach : MonoBehaviour
     [Header("References")]
     public RabbitData Data;
 
-    private bool _isHungry;
 
 	private int _minStomachSize;
 	private int _maxStomachSize;
@@ -28,6 +27,7 @@ public class Stomach : MonoBehaviour
 	public float FillPercent => _foodPoints / _maxFoodPoints;
 	public int MaxFoodPoints => (int) _maxFoodPoints;
 	public int FoodPoints => (int) _foodPoints;
+    public bool IsHungry { get; private set; }
 
 	private void Start()
 	{
@@ -65,7 +65,9 @@ public class Stomach : MonoBehaviour
 		float realizeHungryChance = Random.Range(0.0f, 1.0f);
 		if (realizeHungryChance <= Data.HungryChanceOverStomachFill.Evaluate(FillPercent))
 		{
-//			Debug.Log("I'm hungry " + FillPercent);
+			//			Debug.Log("I'm hungry " + FillPercent);
+
+			IsHungry = true;
 			onHungry?.Invoke(this, EventArgs.Empty);
 		}
 
@@ -88,10 +90,12 @@ public class Stomach : MonoBehaviour
 	public void Eat(FoodSource food)
 	{
 		_foodPoints += food.FoodAmount;
+		food.Eat();
 		onFoodPointsChange?.Invoke(this, EventArgs.Empty);
 
 		if (FillPercent >= Data.RepleteTreshold)
 		{
+			IsHungry = false;
 			onReplete?.Invoke(this, EventArgs.Empty);
 		}
 	}

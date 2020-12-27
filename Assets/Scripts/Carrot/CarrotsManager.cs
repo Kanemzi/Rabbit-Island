@@ -76,7 +76,7 @@ public class CarrotsManager : MonoBehaviour
 	{
 		if (source is CarrotController carrot)
 		{
-
+			RemoveCarrot(carrot);
 		}
 	}
 
@@ -106,7 +106,8 @@ public class CarrotsManager : MonoBehaviour
 
 			if (_carrots.ContainsKey(cell))
 			{
-				Destroy(carrot.gameObject); // TODO : Handle merge here !
+				CarrotController placedCarrot = _carrots[cell];
+				placedCarrot.Merge(carrot);
 				Debug.Log("Merge");
 				return;
 			}
@@ -129,6 +130,16 @@ public class CarrotsManager : MonoBehaviour
 			if (!_carrots.ContainsKey(data.Cell)) return;
 			_carrots.Remove(data.Cell);
 		}
+	}
+
+	/*
+	 * Removes a carrot from the manager 
+	 */
+	private void RemoveCarrot(CarrotController carrot)
+	{
+		Vector2Int cell = _grid.GetCell(carrot.transform.position);
+		if (!_carrots.ContainsKey(cell)) return;
+		_carrots.Remove(cell);
 	}
 
 

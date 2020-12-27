@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: CarrotData
   m_EditorClassIdentifier: 
   GrowTime: {x: 4.440678, y: 7.084746}
-  RotTime: {x: 18.983051, y: 21.58192}
+  RotTime: {x: 12.164948, y: 15.876288}
   MinGrowScale: 0.4
-  MaxGrowScale: 1.2
+  MaxGrowScale: 1
   MinFoodAmount: {x: 1, y: 3}
-  MaxFoodAmount: {x: 89, y: 107}
+  MaxFoodAmount: {x: 40, y: 50}
   FoodAmountOverTime:
     serializedVersion: 2
     m_Curve:
@@ -56,12 +56,12 @@ MonoBehaviour:
       outWeight: 0.1452381
     - serializedVersion: 3
       time: 1
-      value: 0.9
-      inSlope: 0.27843958
-      outSlope: 0.27843958
+      value: 0.8
+      inSlope: 2.2384043
+      outSlope: 2.2384043
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10732663
+      inWeight: 0.04411763
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
