@@ -3020,6 +3020,7 @@ GameObject:
   - component: {fileID: 1919392941}
   - component: {fileID: 1919392942}
   - component: {fileID: 1919392943}
+  - component: {fileID: 1919392944}
   m_Layer: 0
   m_Name: Island
   m_TagString: Untagged
@@ -3073,10 +3074,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 310adcc3de2bc8e4780af13c9a4714c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InitialCarrotsRadius: 5
-  InitialCarrotsCount: 1
+  InitialCarrotsRadius: 10
+  InitialCarrotsCount: 10
   _grid: {fileID: 1919392942}
   CarrotPrefab: {fileID: 3643579632865925402, guid: 2479e9015a4dd9446880ffd456e01101, type: 3}
+--- !u!114 &1919392944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1919392940}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49bb7c0370fae25499ed6823e6f3dcab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InitialRabbitsRadius: 4
+  InitialRabbitsCount: 1
+  InitialMaxAge: 10
+  _grid: {fileID: 1919392942}
+  RabbitPrefab: {fileID: 7270098678128214864, guid: 8b15d64d829a6cc4e935b9ef327a5ce6, type: 3}
 --- !u!1 &1985769124
 GameObject:
   m_ObjectHideFlags: 0
@@ -3182,10 +3200,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4422845148576163064, guid: fd49409b9f6bb5a44a0d984a368e0832, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.8
-      objectReference: {fileID: 0}
     - target: {fileID: 4422845148914676324, guid: fd49409b9f6bb5a44a0d984a368e0832, type: 3}
       propertyPath: _grid
       value: 
@@ -3208,7 +3222,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4422845148914676327, guid: fd49409b9f6bb5a44a0d984a368e0832, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4422845148914676327, guid: fd49409b9f6bb5a44a0d984a368e0832, type: 3}
       propertyPath: m_LocalPosition.y
@@ -3258,6 +3272,10 @@ PrefabInstance:
     - target: {fileID: 7270098678128214864, guid: 8b15d64d829a6cc4e935b9ef327a5ce6, type: 3}
       propertyPath: m_Name
       value: Rabbit
+      objectReference: {fileID: 0}
+    - target: {fileID: 7270098678128214864, guid: 8b15d64d829a6cc4e935b9ef327a5ce6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7270098678128214866, guid: 8b15d64d829a6cc4e935b9ef327a5ce6, type: 3}
       propertyPath: m_RootOrder

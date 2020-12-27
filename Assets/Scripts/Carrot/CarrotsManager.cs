@@ -33,7 +33,7 @@ public class CarrotsManager : MonoBehaviour
 		if (_carrots.ContainsKey(cell)) return null;
 
 		Vector3 position = _grid.GetRandomPosition(cell);
-		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.identity);
+		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), transform.up));
 
 		CarrotController carrot = obj.GetComponent<CarrotController>();
 		_carrots.Add(cell, carrot);
@@ -41,7 +41,8 @@ public class CarrotsManager : MonoBehaviour
 		CarrotSpread spread = carrot.Spread;
 		Grabbable grabbable = carrot.Grabbable;
 
-		carrot.onRot += RotCarrot;
+		carrot.onRot += OnCarrotDestroy;
+		carrot.FoodSource.onEaten += OnCarrotDestroy;
 		spread.onSpread += SpreadCarrot;
 		grabbable.onGrab += UprootCarrot;
 		grabbable.onDrop += PlantCarrot;
@@ -67,16 +68,21 @@ public class CarrotsManager : MonoBehaviour
 	}
 
 	/*
-	 * Removes a rotten carrot from the grid
-	 * The carrot is removed from the grid as soon a it's rotten, therefore, the rotten carrot cannot be eaten by rabbits
+	 * Removes a carrot from the grid
+	 * The carrot is removed from the grid as soon as it's rotten, therefore, the rotten carrot cannot be eaten by rabbits
 	 * However, the rotten carrots are still visually present on the ground during the rot animation (other new carrots can still appear
 	 * on the same cell during this animation)
 	 */
-	private void RotCarrot(object source, EventArgs data)
+	private void OnCarrotDestroy(object source, EventArgs data)
 	{
 		if (source is CarrotController carrot)
 		{
 			RemoveCarrot(carrot);
+		}
+
+		if (source is FoodSource food)
+		{
+			RemoveCarrot(food.GetComponent<CarrotController>());
 		}
 	}
 
@@ -137,6 +143,7 @@ public class CarrotsManager : MonoBehaviour
 	 */
 	private void RemoveCarrot(CarrotController carrot)
 	{
+		if (!carrot) return;
 		Vector2Int cell = _grid.GetCell(carrot.transform.position);
 		if (!_carrots.ContainsKey(cell)) return;
 		_carrots.Remove(cell);

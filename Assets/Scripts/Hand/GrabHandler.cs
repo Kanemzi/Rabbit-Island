@@ -15,17 +15,28 @@ public class GrabHandler : MonoBehaviour
 		_grabbed = null;
 	}
 
-	public void Grab(object sender, HandController.TargetCellData data)
+	public void Grab(object sender, HandController.GrabData data)
 	{
 		if (_grabbed) return;
 		if (!data.Valid) return;
 
 		// TODO : Later, take in account rabbit targets
+		CarrotController carrot;
+		RabbitController rabbit = data.Rabbit;
 
-		CarrotController carrot = _carrots.GetCarrotAt(data.Cell);
-		if (!carrot) return;
+		Grabbable grabbed;
 
-		Grabbable grabbed = carrot.GetComponent<Grabbable>();
+		if (!rabbit)
+		{
+			carrot = _carrots.GetCarrotAt(data.Cell);
+			if (!carrot) return;
+			grabbed = carrot.Grabbable;
+		}
+		else
+		{
+			grabbed = rabbit.Grabbable;
+		}
+		
 		if (!grabbed) return;
 
 		grabbed.Grab(data.Cell);
@@ -33,10 +44,10 @@ public class GrabHandler : MonoBehaviour
 		_grabbed = grabbed;
 
 		_grabHandle.connectedBody = grabbed.Rigidbody;
-		_grabHandle.connectedAnchor = grabbed.GrabHandle.position;
+		_grabHandle.connectedAnchor = grabbed.GrabHandle.localPosition;
 	}
 
-	public void Drop(object sender, HandController.TargetCellData data)
+	public void Drop(object sender, HandController.GrabData data)
 	{
 		if (!_grabbed) return;
 

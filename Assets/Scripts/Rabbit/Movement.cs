@@ -37,6 +37,8 @@ public class Movement : MonoBehaviour
 
 	public bool ReachPosition(Vector3 position)
 	{
+		_agent.speed = _currentSpeed;
+
 		if (!PositionReached())
 		{
 			onCancelMove?.Invoke(this, EventArgs.Empty);
@@ -56,7 +58,7 @@ public class Movement : MonoBehaviour
 
 	private void Update()
 	{
-		if (!_currentTargetReached)
+		if (_agent.isActiveAndEnabled && !_currentTargetReached)
 		{
 			_currentTargetReached = PositionReached();
 			onTargetReached?.Invoke(this, EventArgs.Empty);

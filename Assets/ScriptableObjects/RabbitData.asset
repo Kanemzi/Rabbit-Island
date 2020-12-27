@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcbbe586f8489e469b47c25b9d25f12, type: 3}
   m_Name: RabbitData
   m_EditorClassIdentifier: 
-  DeathAge: {x: 155.89728, y: 240}
+  DeathAge: {x: 83.83442, y: 145.44662}
   MinGrowScale: 0.4
   MaxGrowScale: 0.8
   PerceptionMaxDistance: 5
@@ -111,7 +111,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   RepleteTreshold: 0.7
-  StomachStepInterval: 2
+  StomachStepInterval: 1
   StomachEmptyStep: 1
   MinMateAge: 10
   MaxMateAge: 20

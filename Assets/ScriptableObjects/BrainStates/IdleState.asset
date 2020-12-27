@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: IdleState
   m_EditorClassIdentifier: 
   MovementsRange: 2
-  MoveTimeInterval: {x: 3.029108, y: 8.996936}
+  MoveTimeInterval: {x: 2.2823532, y: 4.7764707}

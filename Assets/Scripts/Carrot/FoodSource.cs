@@ -42,5 +42,6 @@ public class FoodSource : MonoBehaviour
 	public void Merge(FoodSource food)
 	{
 		_foodBonus += food.FoodAmount;
+		if (_foodBonus > Data.MaxFoodBonus) _foodBonus = Data.MaxFoodBonus;
 	}
 }

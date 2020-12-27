@@ -44,7 +44,7 @@ public class CellHighlight : MonoBehaviour
 		transform.localScale = Grid.CellSize * Vector3.one;
 	}
 
-	public void UpdateTarget(object sender, HandController.TargetCellData data)
+	public void UpdateTarget(object sender, HandController.GrabData data)
 	{
 		Valid = data.Valid;
 		LeanTween.move(gameObject, data.Position , 0.05f);

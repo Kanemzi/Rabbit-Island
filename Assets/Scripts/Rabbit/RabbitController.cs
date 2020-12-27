@@ -2,10 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class RabbitController : MonoBehaviour
 {
 	public event EventHandler onGrow;
+	public event EventHandler onDead; // age or starve
 
 	[Header("References")]
     public RabbitData Data;
@@ -13,6 +15,8 @@ public class RabbitController : MonoBehaviour
     public Stomach Stomach;
 	public Grabbable Grabbable;
 	public Movement Movement;
+	public NavMeshAgent Agent;
+	public RabbitAnimations Animations;
 
 	private float _deathAge;
 
@@ -33,6 +37,8 @@ public class RabbitController : MonoBehaviour
 
 		// Binds events
 		onGrow += Stomach.OnRabbitGrow;
+		onGrow += Movement.OnRabbitGrow;
+		onGrow += Animations.OnGrow;
 
 		Grabbable.onGrab += OnGrab;
 		Grabbable.onDrop += OnDrop;
@@ -51,18 +57,28 @@ public class RabbitController : MonoBehaviour
 		onGrow?.Invoke(this, EventArgs.Empty);
 	}
 
+	public void SetAge(float age)
+	{
+		_currentAge = age;
+		onGrow?.Invoke(this, EventArgs.Empty);
+	}
+
 	private void ResumeGrowing()
 	{
 		_growing = true;
 		Stomach.enabled = true;
+		Movement.enabled = true;
 		Brain.enabled = true;
+		Agent.enabled = true;
 	}
 
 	private void PauseGrowing()
 	{
 		_growing = false;
 		Stomach.enabled = false;
+		Movement.enabled = false;
 		Brain.enabled = false;
+		Agent.enabled = false;
 	}
 
 	private void OnGrab(object sender, Grabbable.GrabData data) => PauseGrowing();

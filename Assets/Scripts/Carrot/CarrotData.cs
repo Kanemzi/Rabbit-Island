@@ -17,6 +17,7 @@ public class CarrotData : ScriptableObject
     [MinMaxSlider(1, 20)] public Vector2Int MinFoodAmount;
     [MinMaxSlider(1, 200)] public Vector2Int MaxFoodAmount;
     public AnimationCurve FoodAmountOverTime;
+    public int MaxFoodBonus = 30;
 
     [Header("Spread")]
     public AnimationCurve SpreadChanceOverTime;

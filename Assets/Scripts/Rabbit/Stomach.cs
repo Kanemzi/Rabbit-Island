@@ -8,7 +8,7 @@ public class Stomach : MonoBehaviour
 {
     public event EventHandler onHungry;
 	public event EventHandler onReplete;
-	public event EventHandler onEmpty;
+	public event EventHandler onStarve;
 	public event EventHandler onFoodPointsChange;
 	public event EventHandler onGrow;
 
@@ -55,7 +55,7 @@ public class Stomach : MonoBehaviour
 	{
 		if (_foodPoints <= 0)
 		{
-			onEmpty?.Invoke(this, EventArgs.Empty);
+			onStarve?.Invoke(this, EventArgs.Empty);
 			return;
 		}
 
@@ -90,6 +90,8 @@ public class Stomach : MonoBehaviour
 	public void Eat(FoodSource food)
 	{
 		_foodPoints += food.FoodAmount;
+		if (_foodPoints > _maxFoodPoints) _foodPoints = Mathf.FloorToInt(_maxFoodPoints);
+
 		food.Eat();
 		onFoodPointsChange?.Invoke(this, EventArgs.Empty);
 
