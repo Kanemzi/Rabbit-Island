@@ -13,12 +13,13 @@ public class Brain : SerializedMonoBehaviour
     public Movement Movement;
     public Eyes Eyes;
     public Stomach Stomach;
+    public Reproduction Reproduction;
 
     public enum Action
 	{
         Idle, 
         SearchFood, ReachFood, Eat,
-        WaitMate, JoinMate, Mate
+        SearchMate, WaitMate, JoinMate, Mate
 	}
 
     [SerializeField] private Dictionary<Action, BrainState> _states;
@@ -28,6 +29,7 @@ public class Brain : SerializedMonoBehaviour
 
     /* * * * * Internal state * * * * */
     public bool Hungry { get; private set; }
+    public bool WantToMate { get; private set; }
 
     /* * * * * Work memory * * * * */
     // Idle State
@@ -37,9 +39,16 @@ public class Brain : SerializedMonoBehaviour
     // Food State loop
     [HideInInspector] public CarrotController TargetFood;
 
+    // Mate State loop
+    [HideInInspector] public RabbitController TargetMate;
+    [HideInInspector] public bool MateReached;
+
 	private void Awake()
 	{
 	    Hungry = false;
+        WantToMate = false;
+        TargetFood = null;
+        TargetMate = null;
 	}
     
     void Start()

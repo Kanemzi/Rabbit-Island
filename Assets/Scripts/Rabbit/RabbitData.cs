@@ -35,6 +35,7 @@ public class RabbitData : ScriptableObject
     public AnimationCurve MateChanceOverTime;
     public float MinStomachFillForMate = 0.5f;
     public float TryMateInterval = 5.0f;
+    public int MaxChildrenCount = 6;
 
     public float RandomDeathAge => Random.Range(DeathAge.x, DeathAge.y);
     public int RandomMinStomachSize => Random.Range(MinStomachSize.x, MinStomachSize.y);

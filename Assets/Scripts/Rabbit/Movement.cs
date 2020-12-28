@@ -51,6 +51,18 @@ public class Movement : MonoBehaviour
 		return _agent.SetDestination(Target);
 	}
 
+	public void StopMove()
+	{
+		if (!PositionReached())
+		{
+			onCancelMove?.Invoke(this, EventArgs.Empty);
+		}
+
+		Target = transform.position;
+		_currentTargetReached = true;
+		_agent.Stop();
+	}
+
 	public bool PositionReached()
 	{
 		return _agent.remainingDistance <= _agent.stoppingDistance;
@@ -75,5 +87,10 @@ public class Movement : MonoBehaviour
 	{
 		if (sender is RabbitController rabbit)
 			UpdateSpeed(rabbit.LifePercent);
+	}
+
+	public void LookAtTarget(Vector3 target)
+	{
+		transform.LookAt(target, Vector3.up);
 	}
 }

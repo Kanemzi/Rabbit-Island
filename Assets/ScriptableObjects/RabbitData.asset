@@ -113,13 +113,32 @@ MonoBehaviour:
   RepleteTreshold: 0.7
   StomachStepInterval: 1
   StomachEmptyStep: 1
-  MinMateAge: 10
-  MaxMateAge: 20
+  MinMateAge: 10.8
+  MaxMateAge: 74
   MateChanceOverTime:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   MinStomachFillForMate: 0.5
-  TryMateInterval: 5
+  TryMateInterval: 4
+  MaxChildrenCount: 6

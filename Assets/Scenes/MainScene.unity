@@ -586,7 +586,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21600
+  m_Name: pb_Mesh21622
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -862,7 +862,7 @@ MeshCollider:
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 1734048581}
+  m_Mesh: {fileID: 1828005749}
 --- !u!33 &1256256791
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -870,7 +870,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256256788}
-  m_Mesh: {fileID: 1734048581}
+  m_Mesh: {fileID: 1828005749}
 --- !u!23 &1256256792
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1258,7 +1258,7 @@ MonoBehaviour:
     m_AreaError: 15
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
-  m_Mesh: {fileID: 1734048581}
+  m_Mesh: {fileID: 1828005749}
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -2687,7 +2687,7 @@ Mesh:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21586
+  m_Name: pb_Mesh21608
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -2845,13 +2845,13 @@ Mesh:
     offset: 0
     size: 0
     path: 
---- !u!43 &1734048581
+--- !u!43 &1828005749
 Mesh:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh21572
+  m_Name: pb_Mesh21594
   serializedVersion: 10
   m_SubMeshes:
   - serializedVersion: 2
@@ -3091,7 +3091,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InitialRabbitsRadius: 4
-  InitialRabbitsCount: 1
+  InitialRabbitsCount: 2
   InitialMaxAge: 10
   _grid: {fileID: 1919392942}
   RabbitPrefab: {fileID: 7270098678128214864, guid: 8b15d64d829a6cc4e935b9ef327a5ce6, type: 3}

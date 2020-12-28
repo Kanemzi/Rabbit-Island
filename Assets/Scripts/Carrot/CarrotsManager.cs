@@ -144,6 +144,7 @@ public class CarrotsManager : MonoBehaviour
 	private void RemoveCarrot(CarrotController carrot)
 	{
 		if (!carrot) return;
+
 		Vector2Int cell = _grid.GetCell(carrot.transform.position);
 		if (!_carrots.ContainsKey(cell)) return;
 		_carrots.Remove(cell);

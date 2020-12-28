@@ -42,6 +42,7 @@ GameObject:
   - component: {fileID: 7270098678128214871}
   - component: {fileID: 7270098678128214868}
   - component: {fileID: 6435691311686458094}
+  - component: {fileID: 6525814177996634942}
   - component: {fileID: 7270098678128214869}
   - component: {fileID: 7408386824459859236}
   - component: {fileID: 8355214894560585572}
@@ -91,6 +92,7 @@ MonoBehaviour:
   Movement: {fileID: 8355214894560585572}
   Agent: {fileID: 7270098678128214867}
   Animations: {fileID: 4495553189981818282}
+  Reproduction: {fileID: 6525814177996634942}
 --- !u!114 &7270098678128214868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +113,10 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 05b2a7b57e3e2e64e85b549e1d60ea09, type: 2}
     - {fileID: 11400000, guid: 66fa7b409eeb0ef4687a5c933a8a0bbc, type: 2}
     - {fileID: 11400000, guid: 05a327ac523cfbb48a5e51703b1ae104, type: 2}
+    - {fileID: 11400000, guid: cbe2f8b63c3258f4aa16120be87928ec, type: 2}
+    - {fileID: 11400000, guid: ea22c2b38a8215f42b8e2357719e1748, type: 2}
+    - {fileID: 11400000, guid: 6110968ef5550ca4ba3c5270f4287a6e, type: 2}
+    - {fileID: 11400000, guid: 73ee8978910e20841ad391a51d066ec1, type: 2}
     SerializedBytesString: 
     Prefab: {fileID: 0}
     PrefabModificationsReferencedUnityObjects: []
@@ -135,16 +141,76 @@ MonoBehaviour:
       Data: 
     - Name: 
       Entry: 12
+      Data: 8
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 0
+    - Name: $v
+      Entry: 10
+      Data: 0
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 1
+    - Name: $v
+      Entry: 10
+      Data: 1
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 2
+    - Name: $v
+      Entry: 10
+      Data: 2
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 3
+    - Name: $v
+      Entry: 10
+      Data: 3
+    - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
+      Entry: 7
+      Data: 
+    - Name: $k
+      Entry: 3
+      Data: 4
+    - Name: $v
+      Entry: 10
       Data: 4
     - Name: 
+      Entry: 8
+      Data: 
+    - Name: 
       Entry: 7
       Data: 
     - Name: $k
       Entry: 3
-      Data: 0
+      Data: 5
     - Name: $v
       Entry: 10
-      Data: 0
+      Data: 5
     - Name: 
       Entry: 8
       Data: 
@@ -153,10 +219,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 1
+      Data: 6
     - Name: $v
       Entry: 10
-      Data: 1
+      Data: 6
     - Name: 
       Entry: 8
       Data: 
@@ -165,22 +231,10 @@ MonoBehaviour:
       Data: 
     - Name: $k
       Entry: 3
-      Data: 2
+      Data: 7
     - Name: $v
       Entry: 10
-      Data: 2
-    - Name: 
-      Entry: 8
-      Data: 
-    - Name: 
-      Entry: 7
-      Data: 
-    - Name: $k
-      Entry: 3
-      Data: 3
-    - Name: $v
-      Entry: 10
-      Data: 3
+      Data: 7
     - Name: 
       Entry: 8
       Data: 
@@ -194,9 +248,12 @@ MonoBehaviour:
   Movement: {fileID: 8355214894560585572}
   Eyes: {fileID: 6435691311686458094}
   Stomach: {fileID: 7270098678128214869}
+  Reproduction: {fileID: 6525814177996634942}
   CenterPosition: {x: 0, y: 0, z: 0}
   TimeBeforeMove: 0
   TargetFood: {fileID: 0}
+  TargetMate: {fileID: 0}
+  MateReached: 0
 --- !u!114 &6435691311686458094
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -210,6 +267,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 61d2399a97b96c84d99992216c8c2667, type: 2}
+--- !u!114 &6525814177996634942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7270098678128214864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 342e017816be3594dbf28730995ff78b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Data: {fileID: 11400000, guid: 61d2399a97b96c84d99992216c8c2667, type: 2}
+  Rabbit: {fileID: 7270098678128214871}
 --- !u!114 &7270098678128214869
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -25,6 +25,8 @@ public class IdleState : MovementState
 	{
 		if (brain.Hungry)
 			return Brain.Action.SearchFood;
+		else if (brain.TargetMate != null)
+			return Brain.Action.WaitMate;
 		return brain.CurrentAction;
 	}
 }

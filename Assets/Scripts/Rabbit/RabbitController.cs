@@ -17,6 +17,7 @@ public class RabbitController : MonoBehaviour
 	public Movement Movement;
 	public NavMeshAgent Agent;
 	public RabbitAnimations Animations;
+	public Reproduction Reproduction;
 
 	private float _deathAge;
 
@@ -24,10 +25,17 @@ public class RabbitController : MonoBehaviour
 	private float _currentAge;
 
 	public float LifePercent => _currentAge / _deathAge;
+
+	// Is the rabbit in a good state to mate
 	public bool ReadyToMate =>
 		Data.MinMateAge <= _currentAge
 		&& _currentAge <= Data.MaxMateAge
-		&& Stomach.FillPercent >= Data.MinStomachFillForMate;
+		&& Stomach.FillPercent >= Data.MinStomachFillForMate
+		&& Reproduction.ChildrenLeft > 0;
+
+	// Is the rabbit free to mate (false if he's already joining a partner)
+	public bool FreeToMate => Brain.TargetMate == null 
+		&& (Brain.CurrentAction == Brain.Action.Idle || Brain.CurrentAction == Brain.Action.SearchMate);
 
 	private void Awake()
 	{
@@ -38,6 +46,7 @@ public class RabbitController : MonoBehaviour
 		// Binds events
 		onGrow += Stomach.OnRabbitGrow;
 		onGrow += Movement.OnRabbitGrow;
+		onGrow += Reproduction.OnRabbitGrow;
 		onGrow += Animations.OnGrow;
 
 		Grabbable.onGrab += OnGrab;
