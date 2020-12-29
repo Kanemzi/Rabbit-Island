@@ -55,6 +55,7 @@ public class RabbitController : MonoBehaviour
 
 		Stomach.onHungry += Brain.OnRabbitHungry;
 		Stomach.onReplete += Brain.OnRabbitReplete;
+		Reproduction.onWantToMate += Brain.OnWantToMate;
 	}
 
 	private void Update()
@@ -62,6 +63,8 @@ public class RabbitController : MonoBehaviour
 		if (!_growing) return;
 
 		_currentAge += Time.deltaTime;
+
+		if (_currentAge >= _deathAge) Kill();
 
 		onGrow?.Invoke(this, EventArgs.Empty);
 	}
@@ -90,6 +93,13 @@ public class RabbitController : MonoBehaviour
 		Agent.enabled = false;
 	}
 
+	public void Kill()
+	{
+		onDead?.Invoke(this, EventArgs.Empty);
+		Destroy(gameObject);
+	}
+
 	private void OnGrab(object sender, Grabbable.GrabData data) => PauseGrowing();
 	private void OnDrop(object sender, Grabbable.DropData data) => ResumeGrowing();
+	private void OnStarve(object sender, EventArgs data) => Kill();
 }

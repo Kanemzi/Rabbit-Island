@@ -12,7 +12,11 @@ public class CarrotsManager : MonoBehaviour
 
 	[Header("References")]
 	[SerializeField] private Grid _grid;
+	[SerializeField] private RabbitsManager _rabbitsManager;
 	public GameObject CarrotPrefab;
+
+	[Header("Parameters")]
+	public int MaxCarrotsPerRabbit = 4;
 
 	private Dictionary<Vector2Int, CarrotController> _carrots;
 
@@ -31,6 +35,10 @@ public class CarrotsManager : MonoBehaviour
 	{
 		if (!_grid.IsValidCell(cell)) return null;
 		if (_carrots.ContainsKey(cell)) return null;
+
+		// Check carrots count limit
+		int maxAllowed = _rabbitsManager.RabbitCount * MaxCarrotsPerRabbit;
+		if (_carrots.Count >= maxAllowed) return null;
 
 		Vector3 position = _grid.GetRandomPosition(cell);
 		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), transform.up));
@@ -114,6 +122,7 @@ public class CarrotsManager : MonoBehaviour
 			{
 				CarrotController placedCarrot = _carrots[cell];
 				placedCarrot.Merge(carrot);
+				Destroy(carrot.gameObject);
 				Debug.Log("Merge");
 				return;
 			}
@@ -146,6 +155,8 @@ public class CarrotsManager : MonoBehaviour
 		if (!carrot) return;
 
 		Vector2Int cell = _grid.GetCell(carrot.transform.position);
+		Destroy(carrot.gameObject);
+
 		if (!_carrots.ContainsKey(cell)) return;
 		_carrots.Remove(cell);
 	}

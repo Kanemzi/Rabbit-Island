@@ -26,6 +26,7 @@ public class Eyes : MonoBehaviour
 
     public List<RabbitController> GetRabbitsInSight()
     {
+        RabbitController self = GetComponent<RabbitController>();
         float distance = Data.PerceptionMaxDistance;
         List<RabbitController> results = new List<RabbitController>();
 
@@ -34,7 +35,7 @@ public class Eyes : MonoBehaviour
         foreach (Collider collider in colliders)
         {
             RabbitController rabbit = collider.GetComponent<RabbitController>();
-            if (rabbit)
+            if (rabbit && rabbit != self)
                 results.Add(rabbit);
         }
 

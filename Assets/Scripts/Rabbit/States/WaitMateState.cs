@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,27 +6,76 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "WaitMateState", menuName = "ScriptableObjects/Brain/WaitMateState")]
 public class WaitMateState : BrainState
 {
-	public virtual void Begin(Brain brain)
+	public override void Begin(Brain brain)
 	{
-		Debug.Log("Waiting for mate");
+		Debug.Log(brain.GetInstanceID() + " Waiting for mate");
+		brain.DoGiveBirth = false;
+
 		brain.Movement.StopMove();
 		brain.MateReached = false;
-	}
-
-	public virtual void End(Brain brain)
-	{
-
-	}
-
-	public virtual void Tick(Brain brain)
-	{
 		brain.Movement.LookAtTarget(brain.TargetMate.transform.position);
+
+		brain.TargetMate.onDead += OnTargetCancelled;
+		brain.TargetMate.Brain.onChangeAction += OnTargetCancelled;
+		brain.TargetMate.Grabbable.onGrab += OnTargetCancelled;
 	}
 
-	public virtual Brain.Action TakeDecision(Brain brain)
+	public override void End(Brain brain)
 	{
+		UnbindMate(brain);
+	}
+
+	public override void Tick(Brain brain)
+	{
+		if (brain.TargetMate && brain.TargetMate.Brain.TargetMate == null)
+		{
+			brain.TargetCancelled = true;
+		}
+	}
+
+	public override Brain.Action TakeDecision(Brain brain)
+	{
+		if (brain.TargetCancelled) return Brain.Action.Idle;
+		
 		if (brain.MateReached)
 			return Brain.Action.Mate;
+
 		return brain.CurrentAction;
 	}
+
+	private void UnbindMate(Brain brain)
+	{
+		if (!brain.TargetMate) return;
+		brain.TargetMate.onDead -= OnTargetCancelled;
+		brain.TargetMate.Brain.onChangeAction -= OnTargetCancelled;
+		brain.TargetMate.Grabbable.onGrab -= OnTargetCancelled;
+	}
+
+	#region [Callbacks]
+
+	private void OnTargetCancelled(object sender, EventArgs data)
+	{
+		if (sender is Brain brain)
+		{
+			Debug.Log("From brain ! " + brain.CurrentAction);
+			if (brain.CurrentAction == Brain.Action.WaitMate || brain.CurrentAction == Brain.Action.Mate)
+			{
+				return;
+			}
+		}
+
+		if (sender is MonoBehaviour behaviour)
+		{
+			brain = behaviour.GetComponent<Brain>();
+			if (brain)
+			{
+				brain.TargetCancelled = true;
+				UnbindMate(brain);
+				brain.TargetMate = null;
+				Debug.Log(brain.GetInstanceID() + " Cancel for some reason");
+			}
+		}
+	}
+
+	#endregion
 }

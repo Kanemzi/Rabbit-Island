@@ -33,6 +33,7 @@ public class Reproduction : MonoBehaviour
 	private void Update()
 	{
 		if (!Rabbit.ReadyToMate) return;
+		if (Rabbit.Brain.WantToMate) return; // Don't process if already wants to mate
 
 		_nextMateStepTime -= Time.deltaTime;
 		if (_nextMateStepTime <= 0.0f)
@@ -45,12 +46,10 @@ public class Reproduction : MonoBehaviour
 
 	private void DoStep()
 	{
-		Debug.Log("Reproduction step");
 		float wantToMateChance = Random.Range(0.0f, 1.0f);
 		if (wantToMateChance <= Data.MateChanceOverTime.Evaluate(_lifePercent))
 		{
 			onWantToMate?.Invoke(this, EventArgs.Empty);
-			Debug.Log("Wants to mate !");
 		}
 	}
 

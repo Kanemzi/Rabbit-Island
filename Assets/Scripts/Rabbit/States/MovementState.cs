@@ -17,7 +17,7 @@ public abstract class MovementState : BrainState
     public override void Begin(Brain brain)
     {
         brain.CenterPosition = brain.transform.position;
-        brain.TimeBeforeMove = RandomMoveTimeInterval;
+        brain.TimeBeforeMove = RandomMoveTimeInterval / 4.0f;
     }
 
     public override void Tick(Brain brain)
@@ -29,7 +29,7 @@ public abstract class MovementState : BrainState
 
             Target = GetRandomPositionFromCenter(brain.CenterPosition, MovementsRange);
             brain.Movement.ReachPosition(Target);
-            onNewTarget?.Invoke(this, EventArgs.Empty);
+            onNewTarget?.Invoke(brain.Movement, EventArgs.Empty);
         }
     }
 

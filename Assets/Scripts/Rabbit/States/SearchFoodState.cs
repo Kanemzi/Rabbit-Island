@@ -6,16 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SearchFoodState", menuName = "ScriptableObjects/Brain/SearchFoodState")]
 public class SearchFoodState : MovementState
 {
-	private CarrotController _foodTarget;
-	private bool _hasCheckedArea;
-
 	public override void Begin(Brain brain)
 	{
 		base.Begin(brain);
 
 		brain.TargetFood = null;
-
-		_hasCheckedArea = false;
+		brain.HasCheckedArea = false;
 
 		onNewTarget += OnNewTarget;
 	}
@@ -28,16 +24,16 @@ public class SearchFoodState : MovementState
 	public override void Tick(Brain brain)
 	{
 		if (!brain.Movement.PositionReached()) return;
-		_hasCheckedArea |= false; // No effect if the area was already checked
+		brain.HasCheckedArea |= false; // No effect if the area was already checked
 		base.Tick(brain);
 	}
 
 	public override Brain.Action TakeDecision(Brain brain)
 	{
-		if (brain.Movement.PositionReached() && !_hasCheckedArea)
+		if (brain.Movement.PositionReached() && !brain.HasCheckedArea)
 		{
-			Debug.Log("Stop at position to find food");
-			_hasCheckedArea = true;
+			// Debug.Log("Stop at position to find food");
+			brain.HasCheckedArea = true;
 			List<CarrotController> carrots = brain.Eyes.GetCarrotsInSight();
 
 			CarrotController closestCarrot = null;
@@ -58,7 +54,7 @@ public class SearchFoodState : MovementState
 			if (closestCarrot)
 			{
 				brain.TargetFood = closestCarrot;
-				Debug.Log("Food found");
+				// Debug.Log("Food found");
 				return Brain.Action.ReachFood;
 			}
 		}
@@ -69,7 +65,9 @@ public class SearchFoodState : MovementState
 
 	private void OnNewTarget(object sender, EventArgs data)
 	{
-		_hasCheckedArea = false;
+		if (sender is Movement movement) { 
+			movement.GetComponent<Brain>().HasCheckedArea = false;
+		}
 	}
 
 	#endregion

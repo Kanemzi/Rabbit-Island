@@ -38,7 +38,7 @@ public class Grid : MonoBehaviour
 			Vector3 position = GetPosition(cell);
 			bool valid = false;
 			NavMeshHit hit;
-			if (NavMesh.SamplePosition(position, out hit, CellSize / 2.0f, NavMesh.AllAreas))
+			if (NavMesh.SamplePosition(position, out hit, 0.07f, NavMesh.AllAreas))
 			{
 				valid = true;
 			}

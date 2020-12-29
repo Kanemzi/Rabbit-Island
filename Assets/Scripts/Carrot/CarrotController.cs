@@ -29,6 +29,8 @@ public class CarrotController : MonoBehaviour
 	public Grabbable Grabbable;
 	public CarrotAnimations Animations;
 
+	[HideInInspector] public List<RabbitController> TargetedBy;
+
 	private float _growTime;
 	private float _rotTime;
 
@@ -38,6 +40,8 @@ public class CarrotController : MonoBehaviour
 
 	private void Start()
 	{
+		TargetedBy = new List<RabbitController>();
+
 		onGrow += FoodSource.OnGrow;
 		onGrow += Spread.OnGrow;
 
@@ -94,8 +98,6 @@ public class CarrotController : MonoBehaviour
 
 	public void Merge(CarrotController other) {
 		FoodSource.Merge(other.FoodSource);
-		Destroy(other.gameObject);
-
 		onMerge?.Invoke(this, EventArgs.Empty);
 	}
 

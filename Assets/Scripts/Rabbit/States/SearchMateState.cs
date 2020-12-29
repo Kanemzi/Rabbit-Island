@@ -6,16 +6,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "SearchMateState", menuName = "ScriptableObjects/Brain/SearchMateState")]
 public class SearchMateState : MovementState
 {
-	private CarrotController _foodTarget;
-	private bool _hasCheckedArea;
-
 	public override void Begin(Brain brain)
 	{
 		base.Begin(brain);
 
-		brain.TargetMate = null;
+		Debug.Log(brain.GetInstanceID() + " Start search mate");
 
-		_hasCheckedArea = false;
+		brain.TargetMate = null;
+		brain.HasCheckedArea = false;
 
 		onNewTarget += OnNewTarget;
 	}
@@ -29,8 +27,8 @@ public class SearchMateState : MovementState
 	{
 		if (!brain.Movement.PositionReached()) return;
 
-		_hasCheckedArea |= false; // No effect if the area was already checked
-		if (_hasCheckedArea)
+		brain.HasCheckedArea |= false; // No effect if the area was already checked
+		if (brain.HasCheckedArea)
 			brain.CenterPosition = brain.transform.position;
 
 		base.Tick(brain);
@@ -43,19 +41,22 @@ public class SearchMateState : MovementState
 		else if (brain.TargetMate != null) // If another mate found while searching
 			return Brain.Action.WaitMate;
 
-		if (brain.Movement.PositionReached() && !_hasCheckedArea)
+		if (brain.Movement.PositionReached() && !brain.HasCheckedArea)
 		{
-			Debug.Log("Stop at position to find mate");
-			_hasCheckedArea = true;
+			Debug.Log(brain.GetInstanceID() + " Stop at position to find mate");
+			brain.HasCheckedArea = true;
 			List<RabbitController> potentialPartners = brain.Eyes.GetRabbitsInSight();
 
 			RabbitController closestValidMate = null;
 			float minDistance = float.MaxValue;
-
+			Debug.Log(potentialPartners.Count + " potential partners");
 			foreach (RabbitController rabbit in potentialPartners)
 			{
 				if (rabbit.Grabbable.Grabbed) continue;
-				if (rabbit.Brain == brain) continue; // Can't auto mate !
+
+				Debug.Log(rabbit.GetInstanceID() + " is ready: " + rabbit.ReadyToMate + " | free: " + rabbit.FreeToMate);
+				Debug.Log("true free reason : " + rabbit.Brain.CurrentAction + " -> " + " mate : " + rabbit.Brain.TargetMate);
+
 				if (!rabbit.ReadyToMate || !rabbit.FreeToMate) continue;
 
 				float distance = (brain.transform.position - rabbit.transform.position).sqrMagnitude;
@@ -70,7 +71,7 @@ public class SearchMateState : MovementState
 			{
 				brain.TargetMate = closestValidMate;
 				closestValidMate.Brain.TargetMate = brain.GetComponent<RabbitController>();
-				Debug.Log("Mate found");
+				Debug.Log(brain.GetInstanceID() + " Mate found: " + closestValidMate.GetInstanceID());
 				return Brain.Action.JoinMate;
 			}
 		}
@@ -81,7 +82,10 @@ public class SearchMateState : MovementState
 
 	private void OnNewTarget(object sender, EventArgs data)
 	{
-		_hasCheckedArea = false;
+		if (sender is Movement movement)
+		{
+			movement.GetComponent<Brain>().HasCheckedArea = false;
+		}
 	}
 
 	#endregion

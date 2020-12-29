@@ -21,8 +21,12 @@ public class Movement : MonoBehaviour
 	private float _currentSpeed;
 	private bool _currentTargetReached;
 
+	private const float CHECK_REACH_DELAY = 0.3f;
+	private float _checkReachTime;
+
 	private void Start()
 	{
+		_checkReachTime = CHECK_REACH_DELAY;
 		_currentSpeed = Data.MinMoveSpeed;
 		_path = new NavMeshPath();
 	}
@@ -37,6 +41,7 @@ public class Movement : MonoBehaviour
 
 	public bool ReachPosition(Vector3 position)
 	{
+		_agent.isStopped = false;
 		_agent.speed = _currentSpeed;
 
 		if (!PositionReached())
@@ -46,6 +51,7 @@ public class Movement : MonoBehaviour
 
 		Target = position;
 		_currentTargetReached = false;
+		_checkReachTime = CHECK_REACH_DELAY;
 
 		onStartMoving?.Invoke(this, EventArgs.Empty);
 		return _agent.SetDestination(Target);
@@ -58,9 +64,7 @@ public class Movement : MonoBehaviour
 			onCancelMove?.Invoke(this, EventArgs.Empty);
 		}
 
-		Target = transform.position;
-		_currentTargetReached = true;
-		_agent.Stop();
+		_agent.isStopped = true;
 	}
 
 	public bool PositionReached()
@@ -70,10 +74,15 @@ public class Movement : MonoBehaviour
 
 	private void Update()
 	{
+		_checkReachTime -= Time.deltaTime;
+		if (_checkReachTime > 0.0f) return;
+
 		if (_agent.isActiveAndEnabled && !_currentTargetReached)
 		{
 			_currentTargetReached = PositionReached();
-			onTargetReached?.Invoke(this, EventArgs.Empty);
+			if (_currentTargetReached) {
+				onTargetReached?.Invoke(this, EventArgs.Empty);
+			}
 		}
 	}
 

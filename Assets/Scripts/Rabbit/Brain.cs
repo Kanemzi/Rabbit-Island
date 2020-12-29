@@ -29,8 +29,8 @@ public class Brain : SerializedMonoBehaviour
 
     /* * * * * Internal state * * * * */
     public bool Hungry { get; private set; }
-    public bool WantToMate { get; private set; }
-
+    public bool WantToMate;
+    
     /* * * * * Work memory * * * * */
     // Idle State
     [HideInInspector] public Vector3 CenterPosition;
@@ -38,12 +38,22 @@ public class Brain : SerializedMonoBehaviour
 
     // Food State loop
     [HideInInspector] public CarrotController TargetFood;
+    [HideInInspector] public float EatTime;
 
     // Mate State loop
     [HideInInspector] public RabbitController TargetMate;
     [HideInInspector] public bool MateReached;
+    [HideInInspector] public float MateTime;
+    [HideInInspector] public bool DoGiveBirth; // true if this rabbit should give birth when mate
 
-	private void Awake()
+    // Reach states 
+    [HideInInspector] public bool TargetCancelled;
+    [HideInInspector] public bool TargetReached;
+    [HideInInspector] public bool FoodReached;
+    [HideInInspector] public bool HasCheckedArea;
+
+
+    private void Awake()
 	{
 	    Hungry = false;
         WantToMate = false;
@@ -56,7 +66,12 @@ public class Brain : SerializedMonoBehaviour
         ChangeState(Action.Idle);
     }
 
-    void Update()
+	private void OnDestroy()
+	{
+        _currentState?.End(this);
+    }
+
+	void Update()
     {
         Action decision = _currentState.TakeDecision(this);
         if (decision != CurrentAction)
@@ -80,6 +95,7 @@ public class Brain : SerializedMonoBehaviour
 
     public void OnRabbitHungry(object sender, EventArgs data) => Hungry = true;
     public void OnRabbitReplete(object sender, EventArgs data) => Hungry = false;
+    public void OnWantToMate(object sender, EventArgs data) => WantToMate = true;
     public void OnDrop(object sender, Grabbable.DropData data) => ChangeState(Action.Idle);
 
     #endregion

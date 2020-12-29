@@ -13,12 +13,12 @@ MonoBehaviour:
   m_Name: CarrotData
   m_EditorClassIdentifier: 
   GrowTime: {x: 4, y: 7}
-  RotTime: {x: 15, y: 20}
+  RotTime: {x: 25, y: 35}
   MinGrowScale: 0.4
   MaxGrowScale: 1
   MaxAbsoluteScale: 1.3
-  MinFoodAmount: {x: 1, y: 8}
-  MaxFoodAmount: {x: 59, y: 80}
+  MinFoodAmount: {x: 1, y: 6}
+  MaxFoodAmount: {x: 30, y: 40}
   FoodAmountOverTime:
     serializedVersion: 2
     m_Curve:
@@ -59,49 +59,49 @@ MonoBehaviour:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 7.9361587
-      outSlope: 7.9361587
+      inSlope: 1.7561885
+      outSlope: 1.7561885
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.15398464
+      outWeight: 0.06741096
     - serializedVersion: 3
-      time: 0.09628773
-      value: 0.5209209
-      inSlope: -2.3627405
-      outSlope: -2.3627405
+      time: 0.13738787
+      value: 0.086623095
+      inSlope: -0.07852587
+      outSlope: -0.07852587
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.2942371
-      outWeight: 0.034108214
+      inWeight: 0.45153934
+      outWeight: 0.3658988
     - serializedVersion: 3
-      time: 0.57197016
-      value: 0.099286154
-      inSlope: 0.03534456
-      outSlope: 0.03534456
+      time: 0.4438092
+      value: 0.0050585344
+      inSlope: -0.022536092
+      outSlope: -0.022536092
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.17195375
-      outWeight: 0.4121323
+      inWeight: 0.3232105
+      outWeight: 0.7871285
     - serializedVersion: 3
-      time: 0.77146214
-      value: 0.58021194
-      inSlope: 1.5893806
-      outSlope: 1.5893806
+      time: 0.7000808
+      value: 0.0135506205
+      inSlope: 0.15709218
+      outSlope: 0.15709218
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
+      inWeight: 0.2904952
+      outWeight: 0.23017532
     - serializedVersion: 3
       time: 1
-      value: 0.7002494
-      inSlope: 0.56866115
-      outSlope: 0.56866115
+      value: 0.17274907
+      inSlope: 1.1965506
+      outSlope: 1.1965506
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.6961337
+      inWeight: 0.067165956
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  TrySpreadInterval: 1
+  TrySpreadInterval: 0.5

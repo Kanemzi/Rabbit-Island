@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6bcbbe586f8489e469b47c25b9d25f12, type: 3}
-  m_Name: RabbitData
+  m_Name: oldRabbitData_back
   m_EditorClassIdentifier: 
-  DeathAge: {x: 73.33334, y: 116.92308}
+  DeathAge: {x: 83.83442, y: 145.44662}
   MinGrowScale: 0.4
   MaxGrowScale: 0.8
-  PerceptionMaxDistance: 5.5
+  PerceptionMaxDistance: 5
   MinMoveSpeed: 4
   MaxMoveSpeed: 3
   MoveSpeedOverAge:
@@ -113,32 +113,32 @@ MonoBehaviour:
   RepleteTreshold: 0.7
   StomachStepInterval: 1
   StomachEmptyStep: 1
-  MinMateAge: 12
-  MaxMateAge: 50
+  MinMateAge: 10.8
+  MaxMateAge: 74
   MateChanceOverTime:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 5.3925185
-      outSlope: 5.3925185
+      inSlope: 2
+      outSlope: 2
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.024509804
+      outWeight: 0
     - serializedVersion: 3
       time: 1
-      value: 0.15461347
-      inSlope: -1.1739879
-      outSlope: -1.1739879
+      value: 1
+      inSlope: 0
+      outSlope: 0
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10620916
+      inWeight: 0
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   MinStomachFillForMate: 0.5
-  TryMateInterval: 3
-  MaxChildrenCount: 3
+  TryMateInterval: 4
+  MaxChildrenCount: 6

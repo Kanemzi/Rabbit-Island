@@ -7,11 +7,9 @@ public class EatState : BrainState
 {
     public float TimeToEat = 1f;
 
-	private float _eatTime;
-
 	public override void Begin(Brain brain)
 	{
-		_eatTime = TimeToEat;
+		brain.EatTime = TimeToEat;
 
 		brain.Stomach.Eat(brain.TargetFood.FoodSource);
 	}
@@ -22,12 +20,12 @@ public class EatState : BrainState
 
 	public override void Tick(Brain brain)
 	{
-		_eatTime -= Time.deltaTime;
+		brain.EatTime -= Time.deltaTime;
 	}
 
 	public override Brain.Action TakeDecision(Brain brain)
 	{
-		if (_eatTime <= 0.0f)
+		if (brain.EatTime <= 0.0f)
 		{
 			if (brain.Stomach.IsHungry) return Brain.Action.SearchFood;
 			else return Brain.Action.Idle;

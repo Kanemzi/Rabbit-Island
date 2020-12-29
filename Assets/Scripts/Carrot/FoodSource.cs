@@ -36,7 +36,6 @@ public class FoodSource : MonoBehaviour
 	public void Eat()
 	{
 		onEaten?.Invoke(this, EventArgs.Empty);
-		Destroy(gameObject);
 	}
 
 	public void Merge(FoodSource food)

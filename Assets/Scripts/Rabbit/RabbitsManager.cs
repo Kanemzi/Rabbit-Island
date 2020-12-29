@@ -14,16 +14,13 @@ public class RabbitsManager : MonoBehaviour
 	[Header("References")]
 	[SerializeField] private Grid _grid;
 	public GameObject RabbitPrefab;
+	public int RabbitCount => _aliveRabbits.Count;
 
 	private List<RabbitController> _aliveRabbits;
 
 	private void Awake()
 	{
 		_aliveRabbits = new List<RabbitController>();
-	}
-
-	private void Start()
-	{
 		Init(InitialRabbitsCount, InitialRabbitsRadius);
 	}
 
@@ -41,7 +38,9 @@ public class RabbitsManager : MonoBehaviour
 		_aliveRabbits.Add(rabbit);
 
 		rabbit.onDead += OnRabbitDeath;
-		
+		rabbit.Reproduction.onGiveBirth += OnGiveBirth;
+		rabbit.Grabbable.onDrop += OnRabbitDrop;
+
 		return rabbit;
 	}
 
@@ -83,6 +82,41 @@ public class RabbitsManager : MonoBehaviour
 			RabbitController rabbit = SpawnRabbit(cell);
 			rabbit.SetAge(Random.Range(0.0f, InitialMaxAge));
 			cells.Remove(cell);
+		}
+	}
+
+	/*
+	 * Executed when a rabbit gives birth to one or more rabbits
+	 */
+	private void OnGiveBirth(object sender, Reproduction.GiveBirthData data)
+	{
+		if (sender is Reproduction reproduction)
+		{
+			Debug.LogWarning("Birth to new rabbits : " + data.Count);
+			Vector2Int cell = _grid.GetCell(reproduction.transform.position);
+			for (int i = 0; i < data.Count; i++)
+			{
+				SpawnRabbit(cell);
+			}
+		}
+	}
+
+	/*
+	 * Executed when a rabbit is dropped
+	 */
+	private void OnRabbitDrop(object sender, Grabbable.DropData data)
+	{
+		if (sender is Grabbable gb)
+		{
+			RabbitController rabbit = gb.GetComponent<RabbitController>();
+			if (!rabbit) return;
+
+			Vector2Int cell = data.Cell;
+
+			if (!_grid.IsValidCell(cell))
+			{
+				rabbit.Kill();
+			}
 		}
 	}
 }

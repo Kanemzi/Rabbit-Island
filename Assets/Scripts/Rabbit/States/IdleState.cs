@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,13 @@ public class IdleState : MovementState
 	public override void Begin(Brain brain)
 	{
 		base.Begin(brain);
+		
+		if( brain.TargetMate)
+		{
+			brain.TargetMate.Brain.TargetMate = null;
+		}
+		brain.TargetMate = null;
+		brain.WantToMate = false;
 	}
 
 	public override void End(Brain brain)
@@ -25,8 +33,13 @@ public class IdleState : MovementState
 	{
 		if (brain.Hungry)
 			return Brain.Action.SearchFood;
+		else if (brain.WantToMate)
+			return Brain.Action.SearchMate;
 		else if (brain.TargetMate != null)
 			return Brain.Action.WaitMate;
+
 		return brain.CurrentAction;
 	}
+
+	
 }
