@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6bcbbe586f8489e469b47c25b9d25f12, type: 3}
   m_Name: RabbitData
   m_EditorClassIdentifier: 
-  DeathAge: {x: 73.33334, y: 116.92308}
+  DeathAge: {x: 104.95727, y: 130.5983}
   MinGrowScale: 0.4
   MaxGrowScale: 0.8
-  PerceptionMaxDistance: 5.5
-  MinMoveSpeed: 4
-  MaxMoveSpeed: 3
+  PerceptionMaxDistance: 4
+  MinMoveSpeed: 3
+  MaxMoveSpeed: 2
   MoveSpeedOverAge:
     serializedVersion: 2
     m_Curve:
@@ -81,7 +81,7 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.33333334
     - serializedVersion: 3
-      time: 0.2
+      time: 0.13954468
       value: 1
       inSlope: 0.02827876
       outSlope: 0.0012444791
@@ -90,13 +90,13 @@ MonoBehaviour:
       inWeight: 0.51088774
       outWeight: 0.35218978
     - serializedVersion: 3
-      time: 0.5
+      time: 0.4133883
       value: 0
-      inSlope: -0.019583903
-      outSlope: -0.019583903
+      inSlope: -0.0133505855
+      outSlope: -0.0133505855
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.33333334
+      inWeight: 0.39151713
       outWeight: 0.19632335
     - serializedVersion: 3
       time: 1
@@ -110,35 +110,44 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  RepleteTreshold: 0.7
+  RepleteTreshold: 0.6
   StomachStepInterval: 1
   StomachEmptyStep: 1
-  MinMateAge: 12
-  MaxMateAge: 50
+  MinMateAge: 15
+  MaxMateAge: 100
   MateChanceOverTime:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
       time: 0
       value: 0
-      inSlope: 5.3925185
-      outSlope: 5.3925185
+      inSlope: 5.1705723
+      outSlope: 5.1705723
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.024509804
+      outWeight: 0.031917404
     - serializedVersion: 3
-      time: 1
-      value: 0.15461347
-      inSlope: -1.1739879
-      outSlope: -1.1739879
+      time: 0.8239905
+      value: 0.8517712
+      inSlope: -0.033461403
+      outSlope: -0.033461403
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.10620916
+      inWeight: 0.09971046
+      outWeight: 0.32578197
+    - serializedVersion: 3
+      time: 1
+      value: 0.50254
+      inSlope: -1.772227
+      outSlope: -1.772227
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.28388128
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  MinStomachFillForMate: 0.5
-  TryMateInterval: 3
+  MinStomachFillForMate: 0.4
+  TryMateInterval: 3.5
   MaxChildrenCount: 3

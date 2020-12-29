@@ -28,9 +28,6 @@ public class SearchMateState : MovementState
 		if (!brain.Movement.PositionReached()) return;
 
 		brain.HasCheckedArea |= false; // No effect if the area was already checked
-		if (brain.HasCheckedArea)
-			brain.CenterPosition = brain.transform.position;
-
 		base.Tick(brain);
 	}
 

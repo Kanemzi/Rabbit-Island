@@ -11,6 +11,7 @@ public class Stomach : MonoBehaviour
 	public event EventHandler onStarve;
 	public event EventHandler onFoodPointsChange;
 	public event EventHandler onGrow;
+	public event EventHandler onEat;
 
     [Header("References")]
     public RabbitData Data;
@@ -100,5 +101,7 @@ public class Stomach : MonoBehaviour
 			IsHungry = false;
 			onReplete?.Invoke(this, EventArgs.Empty);
 		}
+
+		onEat?.Invoke(this, EventArgs.Empty);
 	}
 }

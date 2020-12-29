@@ -153,9 +153,9 @@ public class CarrotsManager : MonoBehaviour
 	private void RemoveCarrot(CarrotController carrot)
 	{
 		if (!carrot) return;
+		Destroy(carrot.gameObject);
 
 		Vector2Int cell = _grid.GetCell(carrot.transform.position);
-		Destroy(carrot.gameObject);
 
 		if (!_carrots.ContainsKey(cell)) return;
 		_carrots.Remove(cell);

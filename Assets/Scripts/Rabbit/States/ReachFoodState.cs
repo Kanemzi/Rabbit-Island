@@ -7,7 +7,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ReachFoodState", menuName = "ScriptableObjects/Brain/ReachFoodState")]
 public class ReachFoodState : BrainState
 {
-	public float MaxEatDistance = 0.1f;
+	public float MaxEatDistance = 0.4f;
 
 	public override void Begin(Brain brain)
 	{

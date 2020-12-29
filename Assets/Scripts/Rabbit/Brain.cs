@@ -29,7 +29,7 @@ public class Brain : SerializedMonoBehaviour
 
     /* * * * * Internal state * * * * */
     public bool Hungry { get; private set; }
-    public bool WantToMate;
+    [HideInInspector] public bool WantToMate;
     
     /* * * * * Work memory * * * * */
     // Idle State

@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "JoinMateState", menuName = "ScriptableObjects/Brain/JoinMateState")]
 public class JoinMateState : BrainState
 {
-	public float MaxMateDistance = 0.05f;
+	public float MaxMateDistance = 0.1f;
 
 	public override void Begin(Brain brain)
 	{
@@ -62,7 +62,6 @@ public class JoinMateState : BrainState
 	{
 		if (sender is Brain brain)
 		{
-			Debug.Log("From brain ! " + brain.CurrentAction);
 			if (brain.CurrentAction == Brain.Action.WaitMate || brain.CurrentAction == Brain.Action.Mate)
 			{
 				return;
@@ -72,13 +71,14 @@ public class JoinMateState : BrainState
 		if (sender is MonoBehaviour behaviour)
 		{
 			brain = behaviour.GetComponent<Brain>();
+
+			if (!brain.TargetMate) return;
 			if (behaviour is Grabbable) brain = brain.TargetMate.Brain;
 			
 			if (brain) {
 				brain.TargetCancelled = true;
 				UnbindMate(brain);
 				brain.TargetMate = null;
-				Debug.Log(brain.GetInstanceID() + " Cancel for some reason");
 			}
 		}
 	}

@@ -6,6 +6,8 @@ using Random = UnityEngine.Random;
 
 public class RabbitsManager : MonoBehaviour
 {
+	public event EventHandler onRabbitCountChange;
+
 	[Header("Initialize")]
 	public int InitialRabbitsRadius = 3;
 	public int InitialRabbitsCount = 3;
@@ -41,6 +43,8 @@ public class RabbitsManager : MonoBehaviour
 		rabbit.Reproduction.onGiveBirth += OnGiveBirth;
 		rabbit.Grabbable.onDrop += OnRabbitDrop;
 
+		onRabbitCountChange?.Invoke(this, EventArgs.Empty);
+
 		return rabbit;
 	}
 
@@ -48,6 +52,8 @@ public class RabbitsManager : MonoBehaviour
 	{
 		if (sender is RabbitController rabbit)
 			RemoveRabbit(rabbit);
+
+		onRabbitCountChange?.Invoke(this, EventArgs.Empty);
 	}
 
 	/**
@@ -64,6 +70,7 @@ public class RabbitsManager : MonoBehaviour
 	public void Clear()
 	{
 		_aliveRabbits.Clear();
+		onRabbitCountChange?.Invoke(this, EventArgs.Empty);
 	}
 
 	/**
@@ -83,6 +90,8 @@ public class RabbitsManager : MonoBehaviour
 			rabbit.SetAge(Random.Range(0.0f, InitialMaxAge));
 			cells.Remove(cell);
 		}
+
+		onRabbitCountChange?.Invoke(this, EventArgs.Empty);
 	}
 
 	/*

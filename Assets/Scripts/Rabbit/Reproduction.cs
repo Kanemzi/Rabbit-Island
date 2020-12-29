@@ -8,6 +8,7 @@ public class Reproduction : MonoBehaviour
 {
     public event EventHandler<GiveBirthData> onGiveBirth;
 	public event EventHandler onWantToMate;
+	public event EventHandler onMate;
 
     public class GiveBirthData : EventArgs
 	{
@@ -57,6 +58,11 @@ public class Reproduction : MonoBehaviour
 	{
 		if (sender is RabbitController rabbit)
 			_lifePercent = rabbit.LifePercent;
+	}
+
+	public void Mate()
+	{
+		onMate?.Invoke(this, EventArgs.Empty);
 	}
 
 	public void GiveBirth(Reproduction other, int count)

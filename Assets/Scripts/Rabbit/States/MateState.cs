@@ -5,18 +5,20 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "MateState", menuName = "ScriptableObjects/Brain/MateState")]
 public class MateState : BrainState
 {
-	public float TimeToMate = 2f;
+	public float TimeToMate = 1.2f;
 
 	public override void Begin(Brain brain)
 	{
 		Debug.Log(brain.GetInstanceID() + " START MATE");
 		brain.MateTime = TimeToMate;
+		brain.Reproduction.Mate();
 
 		if (brain.DoGiveBirth)
 		{
 			Reproduction mate = brain.TargetMate.Reproduction;
 			int maxChildren = Mathf.Min(brain.Reproduction.ChildrenLeft, mate.ChildrenLeft);
-			int birthCount = Random.Range(1, maxChildren);
+			int birthCount = Random.Range(1, maxChildren + 1);
+			
 			brain.Reproduction.GiveBirth(mate, birthCount);
 		}
 	}
