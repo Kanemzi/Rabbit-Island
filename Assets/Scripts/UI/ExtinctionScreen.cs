@@ -16,6 +16,7 @@ public class ExtinctionScreen : MonoBehaviour
     public Image Overlay;
     public TextMeshProUGUI MessageLabel;
     public TextMeshProUGUI ScoreLabel;
+    public TextMeshProUGUI TimeLabel;
     public TextMeshProUGUI RestartLabel;
 
     private Inputs _inputs;
@@ -31,12 +32,28 @@ public class ExtinctionScreen : MonoBehaviour
 		}
     }
 
-	private void UpdateMaxPopulationLabel(int score)
+    private int _timeSurvived = 0;
+    public int TimeSurvived
+    {
+        get => _timeSurvived;
+        set
+        {
+            _timeSurvived = value;
+            UpdateTimeLabel(value);
+        }
+    }
+
+    private void UpdateMaxPopulationLabel(int score)
 	{
         ScoreLabel.text = "Maximum Population : " + score;
     }
 
-	private void Start()
+    private void UpdateTimeLabel(int time)
+    {
+        TimeLabel.text = "Time Survived : " + time + " seconds" ;
+    }
+
+    private void Start()
     {
         _canRestart = false;
         Rabbits.onEndangered += OnRabbitsEndangered;
@@ -44,6 +61,7 @@ public class ExtinctionScreen : MonoBehaviour
         MessageLabel.gameObject.SetActive(false);
         ScoreLabel.gameObject.SetActive(false);
         RestartLabel.gameObject.SetActive(false);
+        TimeLabel.gameObject.SetActive(false);
 
         _inputs = new Inputs();
         _inputs.Enable();
@@ -65,6 +83,7 @@ public class ExtinctionScreen : MonoBehaviour
     private void OnRabbitsEndangered(object sender, EventArgs data)
 	{
         MaxPopulation = Rabbits.MaxRabbitsCount;
+        TimeSurvived = (int) Rabbits.ColonySurviveTime;
         Show();
 	}
 
@@ -74,17 +93,21 @@ public class ExtinctionScreen : MonoBehaviour
         {
             MessageLabel.gameObject.SetActive(true);
             ScoreLabel.gameObject.SetActive(true);
+            TimeLabel.gameObject.SetActive(true);
             MessageLabel.alpha = 0.0f;
             ScoreLabel.alpha = 0.0f;
+            TimeLabel.alpha = 0.0f;
 
             LeanTween.moveY(MessageLabel.rectTransform, 30.0f, 1.0f).setFrom(0.0f).setEaseInOutCirc();
             LeanTween.moveY(ScoreLabel.rectTransform, -15.0f, 1.0f).setFrom(0.0f).setEaseInOutCirc();
+            LeanTween.moveY(TimeLabel.rectTransform, -60.0f, 1.0f).setFrom(-45f).setEaseInOutCirc();
 
             LeanTween.value(MessageLabel.gameObject, 0.0f, 1.0f, 1.5f).setEaseInOutCirc()
                 .setOnUpdate((float a) =>
                 {
                     MessageLabel.alpha = a;
                     ScoreLabel.alpha = a;
+                    TimeLabel.alpha = a;
                 }).setOnComplete(() =>
                 {
                     RestartLabel.gameObject.SetActive(true);

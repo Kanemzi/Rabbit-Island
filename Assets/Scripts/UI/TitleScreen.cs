@@ -19,6 +19,7 @@ public class TitleScreen : MonoBehaviour
     public TextMeshProUGUI StartLabel;
     
     private Inputs _inputs;
+    private bool _starting = false;
 
     void Start()
     {
@@ -34,6 +35,8 @@ public class TitleScreen : MonoBehaviour
 
 	private void OnStartAction(InputAction.CallbackContext obj)
 	{
+        if (_starting) return;
+        _starting = true;
         // Hide the menu, start game
         onStart?.Invoke(this, EventArgs.Empty);
         IntroCamera.gameObject.SetActive(false);

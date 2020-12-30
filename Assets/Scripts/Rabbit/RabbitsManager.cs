@@ -30,11 +30,14 @@ public class RabbitsManager : MonoBehaviour
 	public int RabbitCount => _aliveRabbits.Count;
 
 	private List<RabbitController> _aliveRabbits;
+	private bool _endangered = false;
+	public float ColonySurviveTime { get; private set; }
 
 	private void Awake()
 	{
 		_aliveRabbits = new List<RabbitController>();
 		onRabbitCountChange += OnRabbitCountChange;
+		ColonySurviveTime = 0.0f;
 	}
 
 	/*
@@ -95,6 +98,7 @@ public class RabbitsManager : MonoBehaviour
 	public void Init(int count, int radius)
 	{
 		Clear();
+		ColonySurviveTime = 0.0f;
 		List<Vector2Int> cells = _grid.GetCellsInRadius(radius);
 
 		for (int i = 0; i < count && cells.Count > 0; i++)
@@ -153,7 +157,14 @@ public class RabbitsManager : MonoBehaviour
 		if (MaxRabbitsCount == 0) return;
 		if (RabbitCount < 1 || RabbitCount < ExtinctionTreshold * MaxRabbitsCount)
 		{
+			if (_endangered) return;
+			_endangered = true;
 			onEndangered?.Invoke(this, EventArgs.Empty);
 		}
+	}
+
+	private void Update()
+	{
+		ColonySurviveTime += Time.deltaTime;
 	}
 }
