@@ -14,6 +14,7 @@ public class CarrotsManager : MonoBehaviour
 	[SerializeField] private Grid _grid;
 	[SerializeField] private RabbitsManager _rabbitsManager;
 	public GameObject CarrotPrefab;
+	public GameObject DestroyVFXPrefab;
 
 	[Header("Parameters")]
 	public int MaxCarrotsPerRabbit = 4;
@@ -41,7 +42,7 @@ public class CarrotsManager : MonoBehaviour
 		if (_carrots.Count >= maxAllowed) return null;
 
 		Vector3 position = _grid.GetRandomPosition(cell);
-		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), transform.up));
+		GameObject obj = Instantiate(CarrotPrefab, position, Quaternion.AngleAxis(Random.Range(0.0f, 360.0f), Vector3.up));
 
 		CarrotController carrot = obj.GetComponent<CarrotController>();
 		_carrots.Add(cell, carrot);
@@ -86,11 +87,13 @@ public class CarrotsManager : MonoBehaviour
 		if (source is CarrotController carrot)
 		{
 			RemoveCarrot(carrot);
+			Instantiate(DestroyVFXPrefab, carrot.transform.position, Quaternion.identity);
 		}
 
 		if (source is FoodSource food)
 		{
 			RemoveCarrot(food.GetComponent<CarrotController>());
+			Instantiate(DestroyVFXPrefab, food.transform.position, Quaternion.identity);
 		}
 	}
 
@@ -109,12 +112,13 @@ public class CarrotsManager : MonoBehaviour
 			CarrotController carrot = gb.GetComponent<CarrotController>();
 			if (!carrot) return;
 			
+			Instantiate(DestroyVFXPrefab, carrot.transform.position, Quaternion.identity);
+			
 			Vector2Int cell = data.Cell;
 
 			if (!_grid.IsValidCell(cell))
 			{
 				Destroy(carrot.gameObject);
-				Debug.Log("Destroy");
 				return;
 			}
 

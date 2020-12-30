@@ -191,6 +191,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: ddc5209cfb98c4d4586d086f30355dea, type: 2}
+  SpawnVFXPrefab: {fileID: 1886244927094241408, guid: d56db40e80fa0a641a122867c6440cd9, type: 3}
+  DestroyVFXPrefab: {fileID: 6515966943219239647, guid: f9a6fb6a15927514798ababbd3eeb7a2, type: 3}
   _body: {fileID: 147126260357494413}
 --- !u!54 &3994083227280884642
 Rigidbody:

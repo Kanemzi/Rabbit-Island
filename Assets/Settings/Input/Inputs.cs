@@ -51,6 +51,33 @@ public class @Inputs : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Endmenu"",
+            ""id"": ""0fd9c247-3ae2-4e3f-9e79-f4a2d0a208f4"",
+            ""actions"": [
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""fa4def93-f446-4868-8dd6-28b577d15d53"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""7a642f35-b263-488d-b5a6-ca23add22e10"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard-Mouse"",
+                    ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -75,6 +102,9 @@ public class @Inputs : IInputActionCollection, IDisposable
         // Hand
         m_Hand = asset.FindActionMap("Hand", throwIfNotFound: true);
         m_Hand_Grab = m_Hand.FindAction("Grab", throwIfNotFound: true);
+        // Endmenu
+        m_Endmenu = asset.FindActionMap("Endmenu", throwIfNotFound: true);
+        m_Endmenu_Restart = m_Endmenu.FindAction("Restart", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -153,6 +183,39 @@ public class @Inputs : IInputActionCollection, IDisposable
         }
     }
     public HandActions @Hand => new HandActions(this);
+
+    // Endmenu
+    private readonly InputActionMap m_Endmenu;
+    private IEndmenuActions m_EndmenuActionsCallbackInterface;
+    private readonly InputAction m_Endmenu_Restart;
+    public struct EndmenuActions
+    {
+        private @Inputs m_Wrapper;
+        public EndmenuActions(@Inputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Restart => m_Wrapper.m_Endmenu_Restart;
+        public InputActionMap Get() { return m_Wrapper.m_Endmenu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(EndmenuActions set) { return set.Get(); }
+        public void SetCallbacks(IEndmenuActions instance)
+        {
+            if (m_Wrapper.m_EndmenuActionsCallbackInterface != null)
+            {
+                @Restart.started -= m_Wrapper.m_EndmenuActionsCallbackInterface.OnRestart;
+                @Restart.performed -= m_Wrapper.m_EndmenuActionsCallbackInterface.OnRestart;
+                @Restart.canceled -= m_Wrapper.m_EndmenuActionsCallbackInterface.OnRestart;
+            }
+            m_Wrapper.m_EndmenuActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
+            }
+        }
+    }
+    public EndmenuActions @Endmenu => new EndmenuActions(this);
     private int m_KeyboardMouseSchemeIndex = -1;
     public InputControlScheme KeyboardMouseScheme
     {
@@ -165,5 +228,9 @@ public class @Inputs : IInputActionCollection, IDisposable
     public interface IHandActions
     {
         void OnGrab(InputAction.CallbackContext context);
+    }
+    public interface IEndmenuActions
+    {
+        void OnRestart(InputAction.CallbackContext context);
     }
 }

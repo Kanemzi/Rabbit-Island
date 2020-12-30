@@ -7,6 +7,14 @@ using Random = UnityEngine.Random;
 public class RabbitsManager : MonoBehaviour
 {
 	public event EventHandler onRabbitCountChange;
+	public event EventHandler onEndangered;
+
+	[Header("Parameters")]
+	/*
+	 * 0.6f means that if the current rabbit count is < to the
+	 * max rabbit count reached, the colony is dying and the game is over
+	 */
+	public float ExtinctionTreshold = 0.65f;
 
 	[Header("Initialize")]
 	public int InitialRabbitsRadius = 3;
@@ -16,6 +24,9 @@ public class RabbitsManager : MonoBehaviour
 	[Header("References")]
 	[SerializeField] private Grid _grid;
 	public GameObject RabbitPrefab;
+	public GameObject DestroyVFXPrefab;
+
+	public int MaxRabbitsCount { get; private set; }
 	public int RabbitCount => _aliveRabbits.Count;
 
 	private List<RabbitController> _aliveRabbits;
@@ -23,6 +34,7 @@ public class RabbitsManager : MonoBehaviour
 	private void Awake()
 	{
 		_aliveRabbits = new List<RabbitController>();
+		onRabbitCountChange += OnRabbitCountChange;
 		Init(InitialRabbitsCount, InitialRabbitsRadius);
 	}
 
@@ -51,7 +63,10 @@ public class RabbitsManager : MonoBehaviour
 	private void OnRabbitDeath(object sender, EventArgs data)
 	{
 		if (sender is RabbitController rabbit)
+		{
 			RemoveRabbit(rabbit);
+			Instantiate(DestroyVFXPrefab, rabbit.transform.position, Quaternion.identity);
+		}
 
 		onRabbitCountChange?.Invoke(this, EventArgs.Empty);
 	}
@@ -71,6 +86,7 @@ public class RabbitsManager : MonoBehaviour
 	{
 		_aliveRabbits.Clear();
 		onRabbitCountChange?.Invoke(this, EventArgs.Empty);
+		MaxRabbitsCount = 0;
 	}
 
 	/**
@@ -79,6 +95,7 @@ public class RabbitsManager : MonoBehaviour
 	 */
 	public void Init(int count, int radius)
 	{
+		Clear();
 		List<Vector2Int> cells = _grid.GetCellsInRadius(radius);
 
 		for (int i = 0; i < count && cells.Count > 0; i++)
@@ -126,6 +143,20 @@ public class RabbitsManager : MonoBehaviour
 			{
 				rabbit.Kill();
 			}
+		}
+	}
+
+	public void OnRabbitCountChange(object sender, EventArgs data)
+	{
+		if (RabbitCount > MaxRabbitsCount)
+			MaxRabbitsCount = RabbitCount;
+
+
+		if (MaxRabbitsCount == 0) return;
+		if (RabbitCount < 1 || RabbitCount < ExtinctionTreshold * MaxRabbitsCount)
+		{
+			Debug.Log("!!! EXTINCTION !!!");
+			onEndangered?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

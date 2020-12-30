@@ -7,6 +7,7 @@ public class CarrotAnimations : MonoBehaviour
 {
 	[Header("References")]
 	public CarrotData Data;
+	public GameObject SpawnVFXPrefab;
 
 	[SerializeField] private GameObject _body;
 
@@ -16,6 +17,7 @@ public class CarrotAnimations : MonoBehaviour
 	{
 		_scaling = Data.MaxGrowScale - Data.MinGrowScale;
 		UpdateScale(Data.MinFoodAmount.x);
+		Instantiate(SpawnVFXPrefab, transform.position, Quaternion.identity);
 	}
 
 	public void OnRot(object sender, EventArgs data)

@@ -55,6 +55,7 @@ public class RabbitController : MonoBehaviour
 
 		Stomach.onHungry += Brain.OnRabbitHungry;
 		Stomach.onReplete += Brain.OnRabbitReplete;
+		Stomach.onStarve += OnStarve;
 		Reproduction.onWantToMate += Brain.OnWantToMate;
 
 		Grabbable.onGrab += Animations.OnRabbitGrabbed;
@@ -64,6 +65,9 @@ public class RabbitController : MonoBehaviour
 		Movement.onTargetReached += Animations.OnRabbitStopMove;
 		Reproduction.onMate += Animations.OnRabbitMate;
 		Stomach.onEat += Animations.OnRabbitEat;
+		Stomach.onHungry += Animations.OnRabbitHungry;
+		Stomach.onReplete += Animations.OnRabbitReplete;
+		Brain.onChangeAction += Animations.OnBrainChangeAction;
 	}
 
 	private void Update()

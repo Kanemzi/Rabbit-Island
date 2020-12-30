@@ -54,7 +54,7 @@ public class Grabbable : MonoBehaviour
         Rigidbody.isKinematic = true;
         Rigidbody.useGravity = false;
         transform.position = groundPosition;
-        transform.rotation = Quaternion.AngleAxis(UnityEngine.Random.Range(0.0f, 360.0f), transform.up);
+        transform.rotation = Quaternion.AngleAxis(UnityEngine.Random.Range(0.0f, 360.0f), Vector3.up);
         
         Grabbed = false;
 
