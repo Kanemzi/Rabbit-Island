@@ -127,11 +127,9 @@ public class CarrotsManager : MonoBehaviour
 				CarrotController placedCarrot = _carrots[cell];
 				placedCarrot.Merge(carrot);
 				Destroy(carrot.gameObject);
-				Debug.Log("Merge");
 				return;
 			}
 
-			Debug.Log("Re plant carrot ");
 			_carrots.Add(cell, carrot);
 		}
 	}

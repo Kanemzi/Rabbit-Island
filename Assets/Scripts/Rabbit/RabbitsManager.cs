@@ -118,7 +118,6 @@ public class RabbitsManager : MonoBehaviour
 	{
 		if (sender is Reproduction reproduction)
 		{
-			Debug.LogWarning("Birth to new rabbits : " + data.Count);
 			Vector2Int cell = _grid.GetCell(reproduction.transform.position);
 			for (int i = 0; i < data.Count; i++)
 			{
@@ -155,7 +154,6 @@ public class RabbitsManager : MonoBehaviour
 		if (MaxRabbitsCount == 0) return;
 		if (RabbitCount < 1 || RabbitCount < ExtinctionTreshold * MaxRabbitsCount)
 		{
-			Debug.Log("!!! EXTINCTION !!!");
 			onEndangered?.Invoke(this, EventArgs.Empty);
 		}
 	}

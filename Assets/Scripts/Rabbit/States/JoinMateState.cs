@@ -10,7 +10,6 @@ public class JoinMateState : BrainState
 
 	public override void Begin(Brain brain)
 	{
-		Debug.Log(brain.GetInstanceID() + " Joining mate");
 		brain.DoGiveBirth = true;
 		brain.TargetReached = brain.MateReached = brain.TargetCancelled = false;
 		
@@ -87,7 +86,6 @@ public class JoinMateState : BrainState
 	{
 		if (sender is Movement movement)
 		{
-			Debug.Log(movement.GetInstanceID() + " Target mate reach check");
 			Brain brain = movement.GetComponent<Brain>();
 			if (!brain.TargetMate)
 			{
@@ -100,7 +98,6 @@ public class JoinMateState : BrainState
 			if (distance > MaxMateDistance * MaxMateDistance) return;
 
 			brain.MateReached = brain.TargetMate.Brain.MateReached = true;
-			Debug.Log(brain.GetInstanceID() + " MATE REACHED!");
 		}
 	}
 

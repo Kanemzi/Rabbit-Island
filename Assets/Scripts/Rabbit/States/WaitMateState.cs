@@ -8,7 +8,6 @@ public class WaitMateState : BrainState
 {
 	public override void Begin(Brain brain)
 	{
-		Debug.Log(brain.GetInstanceID() + " Waiting for mate");
 		brain.DoGiveBirth = false;
 
 		brain.Movement.StopMove();

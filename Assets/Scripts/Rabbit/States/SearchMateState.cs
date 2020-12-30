@@ -10,8 +10,6 @@ public class SearchMateState : MovementState
 	{
 		base.Begin(brain);
 
-		Debug.Log(brain.GetInstanceID() + " Start search mate");
-
 		brain.TargetMate = null;
 		brain.HasCheckedArea = false;
 
@@ -40,19 +38,14 @@ public class SearchMateState : MovementState
 
 		if (brain.Movement.PositionReached() && !brain.HasCheckedArea)
 		{
-			Debug.Log(brain.GetInstanceID() + " Stop at position to find mate");
 			brain.HasCheckedArea = true;
 			List<RabbitController> potentialPartners = brain.Eyes.GetRabbitsInSight();
 
 			RabbitController closestValidMate = null;
 			float minDistance = float.MaxValue;
-			Debug.Log(potentialPartners.Count + " potential partners");
 			foreach (RabbitController rabbit in potentialPartners)
 			{
 				if (rabbit.Grabbable.Grabbed) continue;
-
-				Debug.Log(rabbit.GetInstanceID() + " is ready: " + rabbit.ReadyToMate + " | free: " + rabbit.FreeToMate);
-				Debug.Log("true free reason : " + rabbit.Brain.CurrentAction + " -> " + " mate : " + rabbit.Brain.TargetMate);
 
 				if (!rabbit.ReadyToMate || !rabbit.FreeToMate) continue;
 
@@ -68,7 +61,6 @@ public class SearchMateState : MovementState
 			{
 				brain.TargetMate = closestValidMate;
 				closestValidMate.Brain.TargetMate = brain.GetComponent<RabbitController>();
-				Debug.Log(brain.GetInstanceID() + " Mate found: " + closestValidMate.GetInstanceID());
 				return Brain.Action.JoinMate;
 			}
 		}

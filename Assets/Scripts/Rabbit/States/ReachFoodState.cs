@@ -63,11 +63,9 @@ public class ReachFoodState : BrainState
 			foreach(RabbitController rabbit in carrot.TargetedBy)
 			{
 				Brain brain = rabbit.GetComponent<Brain>();
-				Debug.Log("CANCEL for food : " + brain);
 
 				if (brain)
 				{
-					Debug.Log("True cancel");
 					brain.TargetCancelled = true;
 				}
 			}
@@ -84,7 +82,6 @@ public class ReachFoodState : BrainState
 			if (distance > MaxEatDistance * MaxEatDistance) return;
 
 			brain.FoodReached = true;
-			// Debug.Log("FOOD !");
 		}
 	}
 

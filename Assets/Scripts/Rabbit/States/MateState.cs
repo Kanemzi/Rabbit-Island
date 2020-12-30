@@ -9,7 +9,6 @@ public class MateState : BrainState
 
 	public override void Begin(Brain brain)
 	{
-		Debug.Log(brain.GetInstanceID() + " START MATE");
 		brain.MateTime = TimeToMate;
 		brain.Reproduction.Mate();
 
@@ -27,7 +26,6 @@ public class MateState : BrainState
 	{
 		brain.TargetMate = null;
 		brain.WantToMate = false;
-		Debug.Log(brain.GetInstanceID() + " END MATE");
 	}
 
 	public override void Tick(Brain brain)

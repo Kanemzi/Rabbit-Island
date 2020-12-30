@@ -44,7 +44,6 @@ public class ExtinctionScreen : MonoBehaviour
 
 	private void Show()
 	{
-        Debug.Log("Show end screen");
         LeanTween.alpha(Overlay.rectTransform, 0.9f, 0.5f).setFrom(0.0f).setOnComplete(() =>
         {
             MessageLabel.gameObject.SetActive(true);

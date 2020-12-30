@@ -32,7 +32,6 @@ public class SearchFoodState : MovementState
 	{
 		if (brain.Movement.PositionReached() && !brain.HasCheckedArea)
 		{
-			// Debug.Log("Stop at position to find food");
 			brain.HasCheckedArea = true;
 			List<CarrotController> carrots = brain.Eyes.GetCarrotsInSight();
 
@@ -54,7 +53,6 @@ public class SearchFoodState : MovementState
 			if (closestCarrot)
 			{
 				brain.TargetFood = closestCarrot;
-				// Debug.Log("Food found");
 				return Brain.Action.ReachFood;
 			}
 		}

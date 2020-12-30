@@ -24,7 +24,6 @@ public class CarrotSpread : MonoBehaviour
         _timeBeforeSpread -= Time.deltaTime;
         if (_timeBeforeSpread <= 0.0f)
 		{
-            //Debug.Log("SpreadChance : " + _spreadChance);
             if (Random.Range(0.0f, 1.0f) < _spreadChance)
 			{
                 onSpread?.Invoke(this, EventArgs.Empty);
@@ -35,7 +34,6 @@ public class CarrotSpread : MonoBehaviour
 
     public void OnGrow(object sender, CarrotController.GrowData data)
     {
-     //   Debug.Log(gameObject.name + " -> grow : " + data.GrowPercent + " / " + data.RipePercent);
         if (data.State == CarrotController.GrowState.Rotten 
                 || data.State == CarrotController.GrowState.Growing)
             _spreadChance = 0.0f;

@@ -66,13 +66,9 @@ public class Stomach : MonoBehaviour
 		float realizeHungryChance = Random.Range(0.0f, 1.0f);
 		if (realizeHungryChance <= Data.HungryChanceOverStomachFill.Evaluate(FillPercent))
 		{
-			//			Debug.Log("I'm hungry " + FillPercent);
-
 			IsHungry = true;
 			onHungry?.Invoke(this, EventArgs.Empty);
 		}
-
-//		Debug.Log("Stomach : " + _foodPoints + "/" + _maxFoodPoints + " -> " + FillPercent + "%");
 	}
 
 	private void ChangeStomachSize(float growPercent)
