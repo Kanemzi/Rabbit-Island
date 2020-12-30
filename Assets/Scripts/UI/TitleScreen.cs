@@ -34,7 +34,6 @@ public class TitleScreen : MonoBehaviour
 
 	private void OnStartAction(InputAction.CallbackContext obj)
 	{
-        Debug.Log("Start action");
         // Hide the menu, start game
         onStart?.Invoke(this, EventArgs.Empty);
         IntroCamera.gameObject.SetActive(false);
