@@ -3,15 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ExtinctionScreen : MonoBehaviour
 {
+    public event EventHandler onEnd;
+
     [Header("References")]
     public RabbitsManager Rabbits;
     public Image Overlay;
     public TextMeshProUGUI MessageLabel;
     public TextMeshProUGUI ScoreLabel;
+    public TextMeshProUGUI RestartLabel;
+
+    private Inputs _inputs;
+    private bool _canRestart;
 
     private int _maxPopulation = 0;
     public int MaxPopulation {
@@ -30,10 +38,28 @@ public class ExtinctionScreen : MonoBehaviour
 
 	private void Start()
     {
+        _canRestart = false;
         Rabbits.onEndangered += OnRabbitsEndangered;
 
         MessageLabel.gameObject.SetActive(false);
         ScoreLabel.gameObject.SetActive(false);
+        RestartLabel.gameObject.SetActive(false);
+
+        _inputs = new Inputs();
+        _inputs.Enable();
+        _inputs.Endmenu.Restart.performed += OnRestartAction;
+    }
+
+	private void OnEnable()
+	{
+        if (_inputs == null) return;
+        _inputs.Enable();
+	}
+
+    private void OnDisable()
+    {
+        if (_inputs == null) return;
+        _inputs.Disable();
     }
 
     private void OnRabbitsEndangered(object sender, EventArgs data)
@@ -59,7 +85,19 @@ public class ExtinctionScreen : MonoBehaviour
                 {
                     MessageLabel.alpha = a;
                     ScoreLabel.alpha = a;
+                }).setOnComplete(() =>
+                {
+                    RestartLabel.gameObject.SetActive(true);
+                    _canRestart = true;
+                    onEnd?.Invoke(this, EventArgs.Empty);
                 });
         }); 
+    }
+
+    private void OnRestartAction(InputAction.CallbackContext obj)
+    {
+        if (!_canRestart) return;
+
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 }

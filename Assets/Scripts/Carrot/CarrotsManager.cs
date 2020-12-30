@@ -24,8 +24,6 @@ public class CarrotsManager : MonoBehaviour
 	private void Start()
 	{
 		_carrots = new Dictionary<Vector2Int, CarrotController>();
-
-		Init(InitialCarrotsCount, InitialCarrotsRadius);
 	}
 
 	/*

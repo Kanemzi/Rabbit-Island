@@ -35,7 +35,6 @@ public class RabbitsManager : MonoBehaviour
 	{
 		_aliveRabbits = new List<RabbitController>();
 		onRabbitCountChange += OnRabbitCountChange;
-		Init(InitialRabbitsCount, InitialRabbitsRadius);
 	}
 
 	/*
